@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -10,10 +10,9 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputPath></OutputPath>
-    <WarningLevel>2</WarningLevel>
-    <DocumentationFile>C:\Users\chuzk\source\repos\DGS-ERP\JPSAGE-ERP.WebAPI\JPSAGE-ERP.WebAPI.xml</DocumentationFile>
+    <DocumentationFile>obj\Debug\netcoreapp3.1\JPSAGE-ERP.WebAPI.xml</DocumentationFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <OutputPath>obj\Debug\netcoreapp3.1\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

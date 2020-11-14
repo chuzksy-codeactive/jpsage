@@ -13,7 +13,15 @@ namespace JPSAGE_ERP.WebAPI
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args)
+                       .ConfigureAppConfiguration((hostContext, builder) =>
+                       {
+                           if (hostContext.HostingEnvironment.IsDevelopment())
+                           {
+                               builder.AddUserSecrets<Program>();
+                           }
+                       }).Build();
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
