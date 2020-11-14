@@ -1,0 +1,715 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JPSAGE-ERP.WebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:JPSAGE_ERP.WebAPI.Controllers.AccountController">
+            <summary>
+            This controller is in charge of the authentication and authorization in the application
+            </summary>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AccountController.Register(JPSAGE_ERP.Application.Models.Account.RegisterViewModel)">
+            <summary>
+            Registers a User
+            </summary>
+            /// <remarks>
+            Rest-api-key : "ebfb7ff0-b2f6-41c8-bef3-4fba17be410c"
+            Return Format: 
+            POST/api/v1/users/Register
+            ()
+            { 
+                username = "",
+                email = "", 
+                status = 1, 
+                message = "Registration Successful" 
+            } 
+            </remarks>
+            <response code="200"> Returns registered username and email with a success message</response>
+            <response code="400">Returns all error description</response>
+            <param name="RegData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AccountController.Login(JPSAGE_ERP.Application.Models.Account.LoginViewModel)">
+            <summary>
+            Returns a User token containing authentication details and user properties 
+            </summary>
+            <remarks>
+            Rest-api-key : "ebfb7ff0-b2f6-41c8-bef3-4fba17be410c"
+            POST/api/v1/users/register
+            (Response)
+            {
+                "token": "",
+                "expiration": "2020-10-10T17:32:37Z",
+                "username": "example@example.com",        
+                 userRoles = [],
+                 phoneNumber = "",
+                 firstName = "",
+                 lastName = "",
+                 otherName = "",
+                 dateOfBirth = "",
+                 emailAddress = "",
+                 emailConfirmed = 
+                 addressLine1 = "",
+                 addressLine2 = "",
+                 country = "",
+                 city = "",
+                 state = "",
+            }
+            </remarks>
+            <param name="LoginData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AccountController.ConfirmEmail(System.String,System.String)">
+            <summary>
+            Confirms a User's Email
+            </summary>
+            <param name="userId"></param>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AccountController.ForgotPassword(JPSAGE_ERP.Application.Models.Account.ForgotPasswordViewModel)">
+            <summary>
+            This api is responsible for sending password reset emails to users of the application
+            </summary>
+            <remarks>
+            Rest-api Key : "ebfb7ff0-b2f6-41c8-bef3-4fba17be410c"
+            </remarks>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AccountController.ResetPassword(System.String,System.String)">
+            <summary>
+            This receives the reset password token and email of the user
+            </summary>
+            <remarks>
+            Rest-api Key : ebfb7ff0-b2f6-41c8-bef3-4fba17be410c
+            </remarks>
+            <param name="token"></param>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AccountController.ResetPassword(JPSAGE_ERP.Application.Models.Account.ResetPasswordViewModel)">
+            <summary>
+            This resets the password of the user
+            </summary>
+            <param name="resetPasswordModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetUserId">
+            <summary>
+            This helper method gets the current signed in user Id
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetEndPointId">
+            <summary>
+            This helper method gets the Id of this current workflow in the work flow process definition table
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.SendAuthorizerCode">
+            <summary>
+            This helper method is used to get authorization code from the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.UploadFile(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            This helper method is used to upload documents in the file upload directory of the application
+            </summary>
+            <param name="formFile"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.CreateClient(JPSAGE_ERP.Application.Models.Admin.Client.CreateClientFormModel)">
+            <summary>
+            This endpoint is used to create a client 
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.UpdateClient(JPSAGE_ERP.Application.Models.Admin.Client.UpdateClientFormModel,System.Int32)">
+            <summary>
+            This endpoint updates the client profile
+            </summary>
+            <param name="model"></param>
+            <param name="clientId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetClient(System.Int32)">
+            <summary>
+            Thiis endpoint gets a client's data with a specified Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetAllClients">
+            <summary>
+            This endpoint gets all the client info from the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.DeleteClient(System.Int32)">
+            <summary>
+            This method deletes a client from the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.CreateCompany(JPSAGE_ERP.Application.Models.Admin.Company.CreateCompanyFormModel)">
+            <summary>
+            This endpoint creates a company
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.UpdateCompany(JPSAGE_ERP.Application.Models.Admin.Company.UpdateCompanyFormModel,System.Int32)">
+            <summary>
+            This endpoint updates a company 
+            </summary>
+            <param name="model"></param>
+            <param name="companyId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetCompany(System.Int32)">
+            <summary>
+            This endpoint gets a particular company whose Id is specified
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetAllCompanies">
+            <summary>
+            This particular endpoint gets all companies registered in the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.DeleteCompany(System.Int32)">
+            <summary>
+            This particular endpoint deletes a registered company of a particular Id 
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.DepartmentForm">
+            <summary>
+            This particular endpoint is To get all list objects needed for selection in creating or updating a department
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.CreateDepartment(JPSAGE_ERP.Application.Models.Admin.Department.CreateDepartmentFormModel)">
+            <summary>
+            This endpoint handles creating of a department
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.UpdateDepartment(JPSAGE_ERP.DataObjects.Admin.Department.UpdateDepartmentFormModel,System.Int32)">
+            <summary>
+            This endpoint handles the Update of a department with a specified Id in the database
+            </summary>
+            <param name="model"></param>
+            <param name="departmentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetDepartment(System.Int32)">
+            <summary>
+            This endpoint gets a department with a specified Id from the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetAllDepartments">
+            <summary>
+            This endpoint gets all departments in the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.DeleteDepartment(System.Int32)">
+            <summary>
+            This endpoint deletes a department with a specified Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.PositionForm">
+            <summary>
+            This endpoint gets List of dropdown objects required in selection for creating or updating a position
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.CreatePosition(JPSAGE_ERP.Application.Models.Admin.Position.CreatePositionFormModel)">
+            <summary>
+            This endpoint handles creating a position in the application
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.UpdatePosition(JPSAGE_ERP.Application.Models.Admin.Position.UpdatePositionFormModel,System.Int32)">
+            <summary>
+            This endpoint updates a position of a specified Id in the database
+            </summary>
+            <param name="model"></param>
+            <param name="positionId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetPosition(System.Int32)">
+            <summary>
+            This endpoint gets a position of a specified Id in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetAllPositions">
+            <summary>
+            This endpoint gets a List of all the Positions in the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.DeletePosition(System.Int32)">
+            <summary>
+            This endpoint deletes a position of a specified Id in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.ManufacturersForm">
+            <summary>
+            This endpoint gets list of dropdown objects required to be selected for creating a Manufacturer
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.CreateManufacturer(JPSAGE_ERP.Application.Models.Admin.Manufacturers.CreateManufacturerFormModel)">
+            <summary>
+            This endpoint handles the creation of a new Manufacturer
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.UpdateManufacturer(JPSAGE_ERP.Application.Models.Admin.Manufacturers.UpdateManufacturerFormModel,System.Int32)">
+            <summary>
+            This endpoint handles the update of an existing manufacturer
+            </summary>
+            <param name="model"></param>
+            <param name="manufacturerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetManufacturer(System.Int32)">
+            <summary>
+            This endpoint gets a particular existing manufacturer in the database with a specified Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetAllManufacturers">
+            <summary>
+            This endpoint gets all manufacturers existing in the database and returns them as a list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.DeleteManufacturer(System.Int32)">
+            <summary>
+            This endpoint is used to delete an existing manufacturer with a specified Id in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.ProjectForm">
+            <summary>
+            This endpoint gets list of dropdown objects to be selected for the creation and update of Projects
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.CreateProject(JPSAGE_ERP.Application.Models.Admin.Project.CreateProjectFormModel)">
+            <summary>
+            This endpoint is used to create a new Project in the database
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.UpdateProject(JPSAGE_ERP.Application.Models.Admin.Project.UpdateProjectFormModel,System.Int32)">
+            <summary>
+            This endpoint is used to update an existing project with a specified Id in the database
+            </summary>
+            <param name="model"></param>
+            <param name="projectId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetProject(System.Int32)">
+            <summary>
+            This endpoint gets an existing project with a specified Id in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetAllProjects">
+            <summary>
+            This endpoint is used to get all existing projects in the database 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.DeleteProject(System.Int32)">
+            <summary>
+            This endpoint is used to delete an existing project with a specified Id in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.RegisterStaff(JPSAGE_ERP.Application.Models.Admin.StaffForm.CreateStaffFormModel)">
+            <summary>
+            This endpoint is used to create a new staff in the database. 
+            </summary>
+            <param name="RegData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.UpdateStaff(JPSAGE_ERP.Application.Models.Admin.StaffForm.UpdateStaffFormModel,System.Int32)">
+            <summary>
+            This endpoint is used to update an existing staff with a specified Id in the database
+            </summary>
+            <param name="model"></param>
+            <param name="staffId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetStaff(System.Int32)">
+            <summary>
+            This endpoint is used to get an existing staff with a specific Id in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetAllStaff">
+            <summary>
+            This endpoint gets all the staff in the database and returns the list as a response
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetWorkFlowProcessDefinition(System.Int32)">
+            <summary>
+            This endpoint gets an existing  work flow process definition with a specified Id in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetAllWorkFlowProcessDefinition">
+            <summary>
+            This endpoint gets all work flow process definition in the database and returns it as a list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.CreateWorkflowProcessDefinition(JPSAGE_ERP.Application.Models.Admin.WorkFlowProcessDefinition.WorkFlowFormModel)">
+            <summary>
+            This endpoint handles the creation of a work flow process definition in the database
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.UpdateWorkflowProcessDefinition(System.Int32,JPSAGE_ERP.Application.Models.Admin.WorkFlowProcessDefinition.WorkFlowFormModel)">
+            <summary>
+            This endpoint handles the update of an existing work flow process definition with a specified Id in the database
+            </summary>
+            <param name="workFlowId"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.StaffRoleForm">
+            <summary>
+            This endpoint gets the list of dropdown object to be selected for the creation of a staff role and returns it as a list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.CreateWorkFlowCheckerStaffRole(JPSAGE_ERP.Application.Models.Admin.StaffForm.CreateStaffRoleFormModel)">
+            <summary>
+            This endpoint is used in creating a new work flow checker staff role
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.CreateWorkFlowAuthorizerStaffRole(JPSAGE_ERP.Application.Models.Admin.StaffForm.CreateStaffRoleFormModel)">
+            <summary>
+            This endpoint is used in creating a new work flow authorizer role
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetWorkFlowStaffRole(System.Int32)">
+            <summary>
+            This endpoint is used to get an existing work flow staff role with a specified Id from the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetWAllorkFlowStaffRoles">
+            <summary>
+            This endpoint gets all work flow staff roles from the database 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.DeleteStaffRole(System.Int32)">
+            <summary>
+            This endpoint is used to delete an existing staff role with a specified Id in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.DeleteStaff(System.Int32)">
+            <summary>
+            This endpoint is used to delete an existing staff with a specified Id in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.CreatePaymentBank(JPSAGE_ERP.Application.Models.Admin.PaymentBank.PaymentBankCreateModel)">
+            <summary>
+            This endpoint is used to create a new payment bank
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.UpdatePaymentBank(JPSAGE_ERP.Application.Models.Admin.PaymentBank.PaymentBankUpdateModel,System.Int32)">
+            <summary>
+            This endpoint is used to update an existing payment bank with a specified Id in the database
+            </summary>
+            <param name="model"></param>
+            <param name="paymentBankId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetPaymentBank(System.Int32)">
+            <summary>
+            This endpoint is used to get an existing payment bank with a specified Id in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetAllPaymentBanks">
+            <summary>
+            This endpoint is used to get all payment banks in the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.DeletePaymentBank(System.Int32)">
+            <summary>
+            This endpoint is use to delete an existing payment bank with a specified Id in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.CreateDocumentType(JPSAGE_ERP.Application.Models.Admin.DocumentType.DocumentTypeFormModel)">
+            <summary>
+            This endpoint is used to create a new Document Type in the database
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.UpdateDocumentType(JPSAGE_ERP.Application.Models.Admin.DocumentType.DocumentTypeFormModel,System.Int32)">
+            <summary>
+            This endpoint is used to update an existing document type with a specified Id in the database
+            </summary>
+            <param name="model"></param>
+            <param name="documentTypeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetDocumentType(System.Int32)">
+            <summary>
+            This endpoint is used to get an existing document type with a specified Id in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.GetAllDocumentTypes">
+            <summary>
+            This endpoint is used to get all Document types in the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.AdminModuleController.DeleteDocumentType(System.Int32)">
+            <summary>
+            This endpoint is used to get 
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.ContractAwardController.GetPurchaseOrderForm">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.ContractAwardController.SubmitPurchaseOrderForm(JPSAGE_ERP.Application.Models.ContractAward.PurchaseOrderFormModel)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.ContractAwardController.GetAllPurchaseOrders">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.ContractAwardController.GetPurchaseOrder(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.ContractAwardController.SubmitPurchaseOrderDetailsForm(System.Collections.Generic.List{JPSAGE_ERP.Application.Models.ContractAward.PurchaseOrderDetailsFormModel},System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="models"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.ContractAwardController.GetAllPurchaseOrderDetails">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.GetAllInvoice">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.GetInvoice(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.InvoiceForm">
+            <summary>
+            This api gets a list of all payment banks and also a list of all the departments for the dropdown selection 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.CreateInvoice(JPSAGE_ERP.Application.Models.InvoiceForPayment.CreateInvoiceFormModel)">
+            <summary>
+            This creates the end user requisition 
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.GetInvoiceDetails(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.InvoiceDetailsForm">
+            <summary>
+            This api gets a list of all payment banks and also a list of all the departments for the dropdown selection 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.CreateInvoiceDetails(JPSAGE_ERP.Application.Models.InvoiceForPayment.InvoiceDetailsFormModel)">
+            <summary>
+            This creates the end user requisition 
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.GetInvoiceOtherInfo(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.InvoiceOtherInfoForm">
+            <summary>
+            This api gets a list of all payment banks and also a list of all the departments for the dropdown selection 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.CreateInvoiceOtherInfo(JPSAGE_ERP.Application.Models.InvoiceForPayment.InvoiceOtherInfoFormModel)">
+            <summary>
+             
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.GetAllPaymentRequestMaster">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.GetPaymentRequestMaster(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.PaymentRequestMasterForm">
+            <summary>
+            This api gets a list of all payment banks and also a list of all the departments for the dropdown selection 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.CreatePaymentRequestMaster(JPSAGE_ERP.Application.Models.InvoiceForPayment.PaymentRequestMasterFormModel)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.GetAllPaymentRequestDetails">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.GetPaymentRequestDetails(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.PaymentRequestDetailsForm">
+            <summary>
+            This api gets a list of all payment banks and also a list of all the departments for the dropdown selection 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.InvoiceController.CreatePaymentRequestDetails(JPSAGE_ERP.Application.Models.InvoiceForPayment.PaymentRequestDetailsFormModel)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.MilestoneManagementController.GetAllJCC">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.MilestoneManagementController.GetJCC(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.MilestoneManagementController.JCCForm">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JPSAGE_ERP.WebAPI.Controllers.MilestoneManagementController.CreateJCC(JPSAGE_ERP.Application.Models.MIlestoneManagement.JobCompletionCertificateFormModel)">
+            <summary>
+            This creates the end user requisition 
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

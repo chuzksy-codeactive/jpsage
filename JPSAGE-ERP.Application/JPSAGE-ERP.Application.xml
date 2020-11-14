@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JPSAGE-ERP.Application</name>
+    </assembly>
+    <members>
+        <member name="M:JPSAGE_ERP.Application.Repository.EurRepository.RegisterEurFormCheckerStatus(System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            Creates end user requisition form's checker status in the database mto form table.
+            </summary>
+            <param name="eurformId">Mto Form Id</param><param name="checkerStatus">Checker Approval Status</param>
+        </member>
+        <member name="M:JPSAGE_ERP.Application.Repository.EurRepository.RegisterEurFormAuthorizerStatus(System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            Creates End user requisition form's authorizer status in the database TblPaymentRequestMaster form table.
+            </summary>
+            <param name="eurformId">Mto Form Id</param><param name="authorizerStatus">Authorizer Approval Status</param>
+        </member>
+    </members>
+</doc>
