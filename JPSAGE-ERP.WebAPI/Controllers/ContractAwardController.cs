@@ -403,8 +403,6 @@ namespace JPSAGE_ERP.WebAPI.Controllers
 
             if (ModelState.IsValid)
             {
-                decimal TotalAmount = 0;
-
                 var purchaseOrder = await _purchaseOrderRepository.GetByIdAsync(PoId);
                 if (purchaseOrder == null)
                 {

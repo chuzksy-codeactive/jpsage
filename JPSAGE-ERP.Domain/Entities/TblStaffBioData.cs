@@ -11,7 +11,10 @@ namespace JPSAGE_ERP.Domain.Entities
             TblAuthChecker = new HashSet<TblAuthChecker>();
             TblEndUserRequisitionProducts = new HashSet<TblEndUserRequisitionProducts>();
             TblEventDetails = new HashSet<TblEventDetails>();
-            TblSrconstructionTechnicalQueries = new HashSet<TblSrconstructionTechnicalQueries>();
+            TblSrconstructionTechnicalQueriesAttentionNavigation = new HashSet<TblSrconstructionTechnicalQueries>();
+            TblSrconstructionTechnicalQueriesStaff = new HashSet<TblSrconstructionTechnicalQueries>();
+            TblSrconstructionTechnicalQueriesTempAttentionNavigation = new HashSet<TblSrconstructionTechnicalQueriesTemp>();
+            TblSrconstructionTechnicalQueriesTempStaff = new HashSet<TblSrconstructionTechnicalQueriesTemp>();
             TblStaffRoles = new HashSet<TblStaffRoles>();
         }
 
@@ -47,7 +50,10 @@ namespace JPSAGE_ERP.Domain.Entities
         public virtual ICollection<TblAuthChecker> TblAuthChecker { get; set; }
         public virtual ICollection<TblEndUserRequisitionProducts> TblEndUserRequisitionProducts { get; set; }
         public virtual ICollection<TblEventDetails> TblEventDetails { get; set; }
-        public virtual ICollection<TblSrconstructionTechnicalQueries> TblSrconstructionTechnicalQueries { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueries> TblSrconstructionTechnicalQueriesAttentionNavigation { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueries> TblSrconstructionTechnicalQueriesStaff { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueriesTemp> TblSrconstructionTechnicalQueriesTempAttentionNavigation { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueriesTemp> TblSrconstructionTechnicalQueriesTempStaff { get; set; }
         public virtual ICollection<TblStaffRoles> TblStaffRoles { get; set; }
     }
 }

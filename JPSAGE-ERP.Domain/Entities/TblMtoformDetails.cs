@@ -35,10 +35,14 @@ namespace JPSAGE_ERP.Domain.Entities
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+        public int? MaterialId { get; set; }
+        public decimal? Amount { get; set; }
+        public int? Rate { get; set; }
 
         public virtual TblCity City { get; set; }
         public virtual TblCountry Country { get; set; }
         public virtual TblManufacturers Manufacturer { get; set; }
+        public virtual TblMaterials Material { get; set; }
         public virtual TblMtoforms Mtoform { get; set; }
         public virtual TblState State { get; set; }
     }

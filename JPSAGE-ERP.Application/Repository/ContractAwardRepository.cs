@@ -1,6 +1,6 @@
 ﻿using JPSAGE_ERP.Application.Interfaces;
-using JPSAGE_ERP.Domain;
 using JPSAGE_ERP.Domain.Entities;
+using JPSAGE_ERP.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;

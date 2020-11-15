@@ -10,6 +10,7 @@ namespace JPSAGE_ERP.Domain.Entities
             TblEndUserRequisitionServices = new HashSet<TblEndUserRequisitionServices>();
             TblMtoformDetails = new HashSet<TblMtoformDetails>();
             TblSrconstructionTechnicalQueries = new HashSet<TblSrconstructionTechnicalQueries>();
+            TblSrconstructionTechnicalQueriesTemp = new HashSet<TblSrconstructionTechnicalQueriesTemp>();
             TblSrnonConformanceReports = new HashSet<TblSrnonConformanceReports>();
             TblStaffBioData = new HashSet<TblStaffBioData>();
         }
@@ -21,6 +22,7 @@ namespace JPSAGE_ERP.Domain.Entities
         public virtual ICollection<TblEndUserRequisitionServices> TblEndUserRequisitionServices { get; set; }
         public virtual ICollection<TblMtoformDetails> TblMtoformDetails { get; set; }
         public virtual ICollection<TblSrconstructionTechnicalQueries> TblSrconstructionTechnicalQueries { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueriesTemp> TblSrconstructionTechnicalQueriesTemp { get; set; }
         public virtual ICollection<TblSrnonConformanceReports> TblSrnonConformanceReports { get; set; }
         public virtual ICollection<TblStaffBioData> TblStaffBioData { get; set; }
     }

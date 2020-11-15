@@ -1,12 +1,10 @@
 ﻿using JPSAGE_ERP.Application.Interfaces;
-using JPSAGE_ERP.Domain;
 using JPSAGE_ERP.Domain.Entities;
+using JPSAGE_ERP.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace JPSAGE_ERP.Application.Repository

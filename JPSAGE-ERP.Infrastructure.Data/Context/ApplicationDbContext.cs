@@ -1,17 +1,21 @@
 ﻿using JPSAGE_ERP.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace JPSAGE_ERP.Domain
+namespace JPSAGE_ERP.Infrastructure.Data.Context
 {
     public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public ApplicationDbContext()
+        {
+        }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
+        public virtual DbSet<Account> Account { get; set; }
         //public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
         //public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         //public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
@@ -22,7 +26,24 @@ namespace JPSAGE_ERP.Domain
         public virtual DbSet<BackgroundExecutor> BackgroundExecutor { get; set; }
         public virtual DbSet<BackgroundExecutorTrack> BackgroundExecutorTrack { get; set; }
         public virtual DbSet<BackgroundExecutorTrackingHistory> BackgroundExecutorTrackingHistory { get; set; }
+        public virtual DbSet<DafmisRole> DafmisRole { get; set; }
+        public virtual DbSet<DafmisRoleClaim> DafmisRoleClaim { get; set; }
+        public virtual DbSet<DafmisUser> DafmisUser { get; set; }
+        public virtual DbSet<DafmisUserClaim> DafmisUserClaim { get; set; }
+        public virtual DbSet<DafmisUserLogin> DafmisUserLogin { get; set; }
+        public virtual DbSet<DafmisUserRole> DafmisUserRole { get; set; }
+        public virtual DbSet<DafmisUserToken> DafmisUserToken { get; set; }
+        public virtual DbSet<Department> Department { get; set; }
+        public virtual DbSet<DepartmentUnit> DepartmentUnit { get; set; }
         public virtual DbSet<Log> Log { get; set; }
+        public virtual DbSet<OpenIddictApplications> OpenIddictApplications { get; set; }
+        public virtual DbSet<OpenIddictAuthorizations> OpenIddictAuthorizations { get; set; }
+        public virtual DbSet<OpenIddictScopes> OpenIddictScopes { get; set; }
+        public virtual DbSet<OpenIddictTokens> OpenIddictTokens { get; set; }
+        public virtual DbSet<Partner> Partner { get; set; }
+        public virtual DbSet<PartnerUser> PartnerUser { get; set; }
+        public virtual DbSet<PefOffice> PefOffice { get; set; }
+        public virtual DbSet<PefUser> PefUser { get; set; }
         public virtual DbSet<TblActivityLog> TblActivityLog { get; set; }
         public virtual DbSet<TblApproval> TblApproval { get; set; }
         public virtual DbSet<TblAuthApprover> TblAuthApprover { get; set; }
@@ -70,6 +91,7 @@ namespace JPSAGE_ERP.Domain
         public virtual DbSet<TblLog> TblLog { get; set; }
         public virtual DbSet<TblMainCustomers> TblMainCustomers { get; set; }
         public virtual DbSet<TblManufacturers> TblManufacturers { get; set; }
+        public virtual DbSet<TblMaterials> TblMaterials { get; set; }
         public virtual DbSet<TblMtoformDetails> TblMtoformDetails { get; set; }
         public virtual DbSet<TblMtoforms> TblMtoforms { get; set; }
         public virtual DbSet<TblNotificationGroup> TblNotificationGroup { get; set; }
@@ -100,8 +122,23 @@ namespace JPSAGE_ERP.Domain
         public virtual DbSet<TblSingleTenderJustification> TblSingleTenderJustification { get; set; }
         public virtual DbSet<TblSpDirectServiceScope> TblSpDirectServiceScope { get; set; }
         public virtual DbSet<TblSrconstructionTechnicalQueries> TblSrconstructionTechnicalQueries { get; set; }
+        public virtual DbSet<TblSrconstructionTechnicalQueriesTemp> TblSrconstructionTechnicalQueriesTemp { get; set; }
+        public virtual DbSet<TblSrconstructionTechnicalQueryAttachments> TblSrconstructionTechnicalQueryAttachments { get; set; }
+        public virtual DbSet<TblSrconstructionTechnicalQueryAttachmentsTemp> TblSrconstructionTechnicalQueryAttachmentsTemp { get; set; }
+        public virtual DbSet<TblSrconstructionTechnicalQueryReplies> TblSrconstructionTechnicalQueryReplies { get; set; }
+        public virtual DbSet<TblSrconstructionTechnicalQueryRepliesTemp> TblSrconstructionTechnicalQueryRepliesTemp { get; set; }
+        public virtual DbSet<TblSrdailyReportFileAttachments> TblSrdailyReportFileAttachments { get; set; }
+        public virtual DbSet<TblSrdailyReportFileAttachmentsTemp> TblSrdailyReportFileAttachmentsTemp { get; set; }
+        public virtual DbSet<TblSrdailyReportHse> TblSrdailyReportHse { get; set; }
+        public virtual DbSet<TblSrdailyReportHsetemp> TblSrdailyReportHsetemp { get; set; }
+        public virtual DbSet<TblSrdailyReportProgressMeasurement> TblSrdailyReportProgressMeasurement { get; set; }
+        public virtual DbSet<TblSrdailyReportProgressMeasurementTemp> TblSrdailyReportProgressMeasurementTemp { get; set; }
         public virtual DbSet<TblSrdailyReporting> TblSrdailyReporting { get; set; }
-        public virtual DbSet<TblSrdailyReportingOtherInfo> TblSrdailyReportingOtherInfo { get; set; }
+        public virtual DbSet<TblSrdailyReportingDelays> TblSrdailyReportingDelays { get; set; }
+        public virtual DbSet<TblSrdailyReportingDelaysTemp> TblSrdailyReportingDelaysTemp { get; set; }
+        public virtual DbSet<TblSrdailyReportingIssues> TblSrdailyReportingIssues { get; set; }
+        public virtual DbSet<TblSrdailyReportingIssuesTemp> TblSrdailyReportingIssuesTemp { get; set; }
+        public virtual DbSet<TblSrdailyReportingTemp> TblSrdailyReportingTemp { get; set; }
         public virtual DbSet<TblSrfileAttachments> TblSrfileAttachments { get; set; }
         public virtual DbSet<TblSrnonConformanceReports> TblSrnonConformanceReports { get; set; }
         public virtual DbSet<TblStaffBioData> TblStaffBioData { get; set; }
@@ -122,19 +159,26 @@ namespace JPSAGE_ERP.Domain
         public virtual DbSet<TblVendorProjectConsortium> TblVendorProjectConsortium { get; set; }
         public virtual DbSet<TblVendorRegFormApproval> TblVendorRegFormApproval { get; set; }
         public virtual DbSet<TblWorkflowProcessDef> TblWorkflowProcessDef { get; set; }
-
+        public virtual DbSet<ZoneArea> ZoneArea { get; set; }
+                
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Account>(entity =>
+            {
+                entity.HasIndex(e => e.UserId);
 
-            modelBuilder.Entity<IdentityRole>().HasData(
-                new { Id = "1", Name = "Admin", NormalizedName = "ADMIN" },
-                new { Id = "2", Name = "Checker", NormalizedName = "CHECKER" },
-                new { Id = "3", Name = "Authorizer", NormalizedName = "AUTHORIZER" },
-                new { Id = "4", Name = "Staff", NormalizedName = "STAFF" },
-                new { Id = "5", Name = "VendorAdmin", NormalizedName = "VENDORADMIN" },
-                new { Id = "6", Name = "Vendor", NormalizedName = "VENDOR" }
-                );
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Cac).HasColumnName("CAC");
+
+                entity.Property(e => e.Nin).HasColumnName("NIN");
+
+                entity.Property(e => e.UserId).HasColumnName("User_Id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Account)
+                    .HasForeignKey(d => d.UserId);
+            });
 
             modelBuilder.Entity<AspNetRoleClaims>(entity =>
             {
@@ -292,6 +336,71 @@ namespace JPSAGE_ERP.Domain
                     .HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<DafmisRole>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<DafmisUser>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.FirstName).HasMaxLength(150);
+
+                entity.Property(e => e.LastName).HasMaxLength(150);
+
+                entity.Property(e => e.MiddleName).HasMaxLength(150);
+            });
+
+            modelBuilder.Entity<DafmisUserLogin>(entity =>
+            {
+                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("AK_DafmisUserLogin_Id")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<DafmisUserRole>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.RoleId });
+            });
+
+            modelBuilder.Entity<DafmisUserToken>(entity =>
+            {
+                entity.HasKey(e => e.UserId);
+
+                entity.Property(e => e.UserId).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<Department>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Description).HasMaxLength(500);
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(150);
+            });
+
+            modelBuilder.Entity<DepartmentUnit>(entity =>
+            {
+                entity.HasIndex(e => e.DepartmentId);
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.DepartmentId).HasColumnName("Department_Id");
+
+                entity.Property(e => e.Title).HasMaxLength(150);
+
+                entity.HasOne(d => d.Department)
+                    .WithMany(p => p.DepartmentUnit)
+                    .HasForeignKey(d => d.DepartmentId);
+            });
+
             modelBuilder.Entity<Log>(entity =>
             {
                 entity.Property(e => e.Level)
@@ -307,6 +416,164 @@ namespace JPSAGE_ERP.Domain
                     .HasMaxLength(50);
 
                 entity.Property(e => e.Message).IsRequired();
+            });
+
+            modelBuilder.Entity<OpenIddictApplications>(entity =>
+            {
+                entity.HasIndex(e => e.ClientId)
+                    .IsUnique();
+
+                entity.Property(e => e.ClientId)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.ConcurrencyToken).HasMaxLength(50);
+
+                entity.Property(e => e.Type)
+                    .IsRequired()
+                    .HasMaxLength(25);
+            });
+
+            modelBuilder.Entity<OpenIddictAuthorizations>(entity =>
+            {
+                entity.HasIndex(e => new { e.ApplicationId, e.Status, e.Subject, e.Type });
+
+                entity.Property(e => e.ConcurrencyToken).HasMaxLength(50);
+
+                entity.Property(e => e.Status)
+                    .IsRequired()
+                    .HasMaxLength(25);
+
+                entity.Property(e => e.Subject).IsRequired();
+
+                entity.Property(e => e.Type)
+                    .IsRequired()
+                    .HasMaxLength(25);
+
+                entity.HasOne(d => d.Application)
+                    .WithMany(p => p.OpenIddictAuthorizations)
+                    .HasForeignKey(d => d.ApplicationId);
+            });
+
+            modelBuilder.Entity<OpenIddictScopes>(entity =>
+            {
+                entity.HasIndex(e => e.Name)
+                    .IsUnique();
+
+                entity.Property(e => e.ConcurrencyToken).HasMaxLength(50);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<OpenIddictTokens>(entity =>
+            {
+                entity.HasIndex(e => e.AuthorizationId);
+
+                entity.HasIndex(e => e.ReferenceId)
+                    .IsUnique()
+                    .HasFilter("([ReferenceId] IS NOT NULL)");
+
+                entity.HasIndex(e => new { e.ApplicationId, e.Status, e.Subject, e.Type });
+
+                entity.Property(e => e.ConcurrencyToken).HasMaxLength(50);
+
+                entity.Property(e => e.ReferenceId).HasMaxLength(100);
+
+                entity.Property(e => e.Status)
+                    .IsRequired()
+                    .HasMaxLength(25);
+
+                entity.Property(e => e.Subject).IsRequired();
+
+                entity.Property(e => e.Type)
+                    .IsRequired()
+                    .HasMaxLength(25);
+
+                entity.HasOne(d => d.Application)
+                    .WithMany(p => p.OpenIddictTokens)
+                    .HasForeignKey(d => d.ApplicationId);
+
+                entity.HasOne(d => d.Authorization)
+                    .WithMany(p => p.OpenIddictTokens)
+                    .HasForeignKey(d => d.AuthorizationId);
+            });
+
+            modelBuilder.Entity<Partner>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Address).HasMaxLength(500);
+
+                entity.Property(e => e.Name).HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<PartnerUser>(entity =>
+            {
+                entity.HasIndex(e => e.PartnerId);
+
+                entity.HasIndex(e => e.UserId);
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.PartnerId).HasColumnName("Partner_Id");
+
+                entity.Property(e => e.UserId).HasColumnName("User_Id");
+
+                entity.HasOne(d => d.Partner)
+                    .WithMany(p => p.PartnerUser)
+                    .HasForeignKey(d => d.PartnerId);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.PartnerUser)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<PefOffice>(entity =>
+            {
+                entity.HasIndex(e => e.ZoneAreaId);
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Address).HasMaxLength(500);
+
+                entity.Property(e => e.Title).HasMaxLength(150);
+
+                entity.Property(e => e.ZoneAreaId).HasColumnName("ZoneArea_Id");
+
+                entity.HasOne(d => d.ZoneArea)
+                    .WithMany(p => p.PefOffice)
+                    .HasForeignKey(d => d.ZoneAreaId);
+            });
+
+            modelBuilder.Entity<PefUser>(entity =>
+            {
+                entity.HasIndex(e => e.OfficeId);
+
+                entity.HasIndex(e => e.UnitId);
+
+                entity.HasIndex(e => e.UserId);
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.OfficeId).HasColumnName("Office_Id");
+
+                entity.Property(e => e.UnitId).HasColumnName("Unit_Id");
+
+                entity.Property(e => e.UserId).HasColumnName("User_Id");
+
+                entity.HasOne(d => d.Office)
+                    .WithMany(p => p.PefUser)
+                    .HasForeignKey(d => d.OfficeId);
+
+                entity.HasOne(d => d.Unit)
+                    .WithMany(p => p.PefUser)
+                    .HasForeignKey(d => d.UnitId);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.PefUser)
+                    .HasForeignKey(d => d.UserId);
             });
 
             modelBuilder.Entity<TblActivityLog>(entity =>
@@ -1726,6 +1993,21 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.StatusReason).HasMaxLength(200);
             });
 
+            modelBuilder.Entity<TblMaterials>(entity =>
+            {
+                entity.HasKey(e => e.MaterialId);
+
+                entity.ToTable("tbl_Materials");
+
+                entity.Property(e => e.MaterialId).HasColumnName("MaterialID");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Description).HasMaxLength(500);
+
+                entity.Property(e => e.MaterialName).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<TblMtoformDetails>(entity =>
             {
                 entity.HasKey(e => e.MtoformDetId);
@@ -1735,6 +2017,8 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.MtoformDetId).HasColumnName("MTOFormDetID");
 
                 entity.Property(e => e.AdditionalInfo).HasMaxLength(100);
+
+                entity.Property(e => e.Amount).HasColumnType("money");
 
                 entity.Property(e => e.CityId).HasColumnName("CityID");
 
@@ -1749,6 +2033,8 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.Item).HasMaxLength(100);
 
                 entity.Property(e => e.ManufacturerId).HasColumnName("ManufacturerID");
+
+                entity.Property(e => e.MaterialId).HasColumnName("MaterialID");
 
                 entity.Property(e => e.ModelNumber).HasMaxLength(100);
 
@@ -1792,6 +2078,11 @@ namespace JPSAGE_ERP.Domain
                     .WithMany(p => p.TblMtoformDetails)
                     .HasForeignKey(d => d.ManufacturerId)
                     .HasConstraintName("FK_tbl_MTOFormDetails_tbl_Manufacturers");
+
+                entity.HasOne(d => d.Material)
+                    .WithMany(p => p.TblMtoformDetails)
+                    .HasForeignKey(d => d.MaterialId)
+                    .HasConstraintName("FK_tbl_MTOFormDetails_tbl_Materials");
 
                 entity.HasOne(d => d.Mtoform)
                     .WithMany(p => p.TblMtoformDetails)
@@ -2724,8 +3015,6 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.Ctqid).HasColumnName("CTQID");
 
-                entity.Property(e => e.Attention).HasMaxLength(100);
-
                 entity.Property(e => e.CityId).HasColumnName("CityID");
 
                 entity.Property(e => e.CountryId).HasColumnName("CountryID");
@@ -2737,10 +3026,12 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.Ctqdescription).HasColumnName("CTQDescription");
 
                 entity.Property(e => e.Ctqnumber)
+                    .IsRequired()
                     .HasColumnName("CTQNumber")
                     .HasMaxLength(100);
 
                 entity.Property(e => e.Ctqtitle)
+                    .IsRequired()
                     .HasColumnName("CTQTitle")
                     .HasMaxLength(200);
 
@@ -2748,17 +3039,20 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.QueryCloseDate).HasColumnType("datetime");
+                entity.Property(e => e.Priority).HasMaxLength(100);
 
                 entity.Property(e => e.QueryDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ReplyRequiredDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Srfaid).HasColumnName("SRFAID");
+                entity.Property(e => e.ReplyRequiredBy).HasColumnType("datetime");
 
                 entity.Property(e => e.StaffId).HasColumnName("StaffID");
 
                 entity.Property(e => e.StateId).HasColumnName("StateID");
+
+                entity.HasOne(d => d.AttentionNavigation)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueriesAttentionNavigation)
+                    .HasForeignKey(d => d.Attention)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueries_tbl_StaffBioData1");
 
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.TblSrconstructionTechnicalQueries)
@@ -2771,14 +3065,430 @@ namespace JPSAGE_ERP.Domain
                     .HasConstraintName("FK_tbl_SRConstructionTechnicalQueries_tbl_Country");
 
                 entity.HasOne(d => d.Staff)
-                    .WithMany(p => p.TblSrconstructionTechnicalQueries)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueriesStaff)
                     .HasForeignKey(d => d.StaffId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tbl_SRConstructionTechnicalQueries_tbl_StaffBioData");
 
                 entity.HasOne(d => d.State)
                     .WithMany(p => p.TblSrconstructionTechnicalQueries)
                     .HasForeignKey(d => d.StateId)
                     .HasConstraintName("FK_tbl_SRConstructionTechnicalQueries_tbl_State");
+            });
+
+            modelBuilder.Entity<TblSrconstructionTechnicalQueriesTemp>(entity =>
+            {
+                entity.HasKey(e => e.Ctqid);
+
+                entity.ToTable("tbl_SRConstructionTechnicalQueriesTemp");
+
+                entity.Property(e => e.Ctqid).HasColumnName("CTQID");
+
+                entity.Property(e => e.CityId).HasColumnName("CityID");
+
+                entity.Property(e => e.CountryId).HasColumnName("CountryID");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Ctqdescription).HasColumnName("CTQDescription");
+
+                entity.Property(e => e.Ctqnumber)
+                    .IsRequired()
+                    .HasColumnName("CTQNumber")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.Ctqtitle)
+                    .IsRequired()
+                    .HasColumnName("CTQTitle")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Priority).HasMaxLength(100);
+
+                entity.Property(e => e.QueryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ReplyRequiredBy).HasColumnType("datetime");
+
+                entity.Property(e => e.StaffId).HasColumnName("StaffID");
+
+                entity.Property(e => e.StateId).HasColumnName("StateID");
+
+                entity.HasOne(d => d.AttentionNavigation)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueriesTempAttentionNavigation)
+                    .HasForeignKey(d => d.Attention)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueriesTemp_tbl_StaffBioData1");
+
+                entity.HasOne(d => d.City)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueriesTemp)
+                    .HasForeignKey(d => d.CityId)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueriesTemp_tbl_City");
+
+                entity.HasOne(d => d.Country)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueriesTemp)
+                    .HasForeignKey(d => d.CountryId)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueriesTemp_tbl_Country");
+
+                entity.HasOne(d => d.Staff)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueriesTempStaff)
+                    .HasForeignKey(d => d.StaffId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueriesTemp_tbl_StaffBioData");
+
+                entity.HasOne(d => d.State)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueriesTemp)
+                    .HasForeignKey(d => d.StateId)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueriesTemp_tbl_State");
+            });
+
+            modelBuilder.Entity<TblSrconstructionTechnicalQueryAttachments>(entity =>
+            {
+                entity.HasKey(e => e.QueryAttId);
+
+                entity.ToTable("tbl_SRConstructionTechnicalQueryAttachments");
+
+                entity.Property(e => e.QueryAttId).HasColumnName("QueryAttID");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Ctqid).HasColumnName("CTQID");
+
+                entity.Property(e => e.DrawingFile).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ReferenceNumber).HasMaxLength(100);
+
+                entity.HasOne(d => d.Ctq)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueryAttachments)
+                    .HasForeignKey(d => d.Ctqid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueryAttachments_tbl_SRConstructionTechnicalQueries");
+            });
+
+            modelBuilder.Entity<TblSrconstructionTechnicalQueryAttachmentsTemp>(entity =>
+            {
+                entity.HasKey(e => e.QueryAttId);
+
+                entity.ToTable("tbl_SRConstructionTechnicalQueryAttachmentsTemp");
+
+                entity.Property(e => e.QueryAttId).HasColumnName("QueryAttID");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Ctqid).HasColumnName("CTQID");
+
+                entity.Property(e => e.DrawingFile).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ReferenceNumber).HasMaxLength(100);
+
+                entity.HasOne(d => d.Ctq)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueryAttachmentsTemp)
+                    .HasForeignKey(d => d.Ctqid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueryAttachmentsTemp_tbl_SRConstructionTechnicalQueriesTemp");
+            });
+
+            modelBuilder.Entity<TblSrconstructionTechnicalQueryReplies>(entity =>
+            {
+                entity.HasKey(e => e.ReplyId);
+
+                entity.ToTable("tbl_SRConstructionTechnicalQueryReplies");
+
+                entity.Property(e => e.ReplyId).HasColumnName("ReplyID");
+
+                entity.Property(e => e.AuthoriserReplyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CheckerReplyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Ctqid).HasColumnName("CTQID");
+
+                entity.Property(e => e.InitiatorReplyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Ctq)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueryReplies)
+                    .HasForeignKey(d => d.Ctqid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueryReplies_tbl_SRConstructionTechnicalQueries");
+            });
+
+            modelBuilder.Entity<TblSrconstructionTechnicalQueryRepliesTemp>(entity =>
+            {
+                entity.HasKey(e => e.ReplyId);
+
+                entity.ToTable("tbl_SRConstructionTechnicalQueryRepliesTemp");
+
+                entity.Property(e => e.ReplyId).HasColumnName("ReplyID");
+
+                entity.Property(e => e.AuthoriserReplyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CheckerReplyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Ctqid).HasColumnName("CTQID");
+
+                entity.Property(e => e.InitiatorReplyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Ctq)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueryRepliesTemp)
+                    .HasForeignKey(d => d.Ctqid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueryRepliesTemp_tbl_SRConstructionTechnicalQueriesTemp");
+            });
+
+            modelBuilder.Entity<TblSrdailyReportFileAttachments>(entity =>
+            {
+                entity.HasKey(e => e.Srdrfaid);
+
+                entity.ToTable("tbl_SRDailyReportFileAttachments");
+
+                entity.Property(e => e.Srdrfaid).HasColumnName("SRDRFAID");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
+
+                entity.Property(e => e.LogisticsReport).HasMaxLength(100);
+
+                entity.Property(e => e.MaterialReport).HasMaxLength(100);
+
+                entity.Property(e => e.Mocreport)
+                    .HasColumnName("MOCReport")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PermitToWork).HasMaxLength(100);
+
+                entity.Property(e => e.ProgressPictures).HasMaxLength(100);
+
+                entity.Property(e => e.Qaqcreport)
+                    .HasColumnName("QAQCReport")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.SecurityReport).HasMaxLength(100);
+
+                entity.Property(e => e.SitePersonnelLogReport).HasMaxLength(100);
+
+                entity.HasOne(d => d.DailyRep)
+                    .WithMany(p => p.TblSrdailyReportFileAttachments)
+                    .HasForeignKey(d => d.DailyRepId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRDailyReportFileAttachments_tbl_SRDailyReporting");
+            });
+
+            modelBuilder.Entity<TblSrdailyReportFileAttachmentsTemp>(entity =>
+            {
+                entity.HasKey(e => e.Srdrfaid);
+
+                entity.ToTable("tbl_SRDailyReportFileAttachmentsTemp");
+
+                entity.Property(e => e.Srdrfaid).HasColumnName("SRDRFAID");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
+
+                entity.Property(e => e.LogisticsReport).HasMaxLength(100);
+
+                entity.Property(e => e.MaterialReport).HasMaxLength(100);
+
+                entity.Property(e => e.Mocreport)
+                    .HasColumnName("MOCReport")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PermitToWork).HasMaxLength(100);
+
+                entity.Property(e => e.ProgressPictures).HasMaxLength(100);
+
+                entity.Property(e => e.Qaqcreport)
+                    .HasColumnName("QAQCReport")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.SecurityReport).HasMaxLength(100);
+
+                entity.Property(e => e.SitePersonnelLogReport).HasMaxLength(100);
+
+                entity.HasOne(d => d.DailyRep)
+                    .WithMany(p => p.TblSrdailyReportFileAttachmentsTemp)
+                    .HasForeignKey(d => d.DailyRepId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRDailyReportFileAttachmentsTemp_tbl_SRDailyReportingTemp");
+            });
+
+            modelBuilder.Entity<TblSrdailyReportHse>(entity =>
+            {
+                entity.HasKey(e => e.Drhseid);
+
+                entity.ToTable("tbl_SRDailyReportHSE");
+
+                entity.Property(e => e.Drhseid).HasColumnName("DRHSEID");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
+
+                entity.Property(e => e.DetailsStatistics)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Remarks).IsRequired();
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.HasOne(d => d.DailyRep)
+                    .WithMany(p => p.TblSrdailyReportHse)
+                    .HasForeignKey(d => d.DailyRepId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRDailyReportHSE_tbl_SRDailyReporting");
+            });
+
+            modelBuilder.Entity<TblSrdailyReportHsetemp>(entity =>
+            {
+                entity.HasKey(e => e.Drhseid);
+
+                entity.ToTable("tbl_SRDailyReportHSETemp");
+
+                entity.Property(e => e.Drhseid).HasColumnName("DRHSEID");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
+
+                entity.Property(e => e.DetailsStatistics)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Remarks).IsRequired();
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.HasOne(d => d.DailyRep)
+                    .WithMany(p => p.TblSrdailyReportHsetemp)
+                    .HasForeignKey(d => d.DailyRepId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRDailyReportHSETemp_tbl_SRDailyReportingTemp");
+            });
+
+            modelBuilder.Entity<TblSrdailyReportProgressMeasurement>(entity =>
+            {
+                entity.HasKey(e => e.ProMeId);
+
+                entity.ToTable("tbl_SRDailyReportProgressMeasurement");
+
+                entity.Property(e => e.ProMeId).HasColumnName("ProMeID");
+
+                entity.Property(e => e.Activity)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CumPlannedProgress).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.CumProgressActual).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.DailyRep)
+                    .WithMany(p => p.TblSrdailyReportProgressMeasurement)
+                    .HasForeignKey(d => d.DailyRepId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRDailyReportProgressMeasurement_tbl_SRDailyReporting");
+            });
+
+            modelBuilder.Entity<TblSrdailyReportProgressMeasurementTemp>(entity =>
+            {
+                entity.HasKey(e => e.ProMeId);
+
+                entity.ToTable("tbl_SRDailyReportProgressMeasurementTemp");
+
+                entity.Property(e => e.ProMeId).HasColumnName("ProMeID");
+
+                entity.Property(e => e.Activity)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CumPlannedProgress).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.CumProgressActual).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.DailyRep)
+                    .WithMany(p => p.TblSrdailyReportProgressMeasurementTemp)
+                    .HasForeignKey(d => d.DailyRepId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRDailyReportProgressMeasurementTemp_tbl_SRDailyReportingTemp1");
             });
 
             modelBuilder.Entity<TblSrdailyReporting>(entity =>
@@ -2789,30 +3499,120 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
 
-                entity.Property(e => e.Activity).HasMaxLength(500);
+                entity.Property(e => e.ConstructionActivities).IsRequired();
+
+                entity.Property(e => e.ConstructionActual).HasColumnType("money");
 
                 entity.Property(e => e.CreatedBy).HasMaxLength(200);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CumPlannedProgress).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.DailyProgress).IsRequired();
 
-                entity.Property(e => e.CumProgressActual).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.FollowingDayPlan).IsRequired();
+
+                entity.Property(e => e.GeneralSummary).IsRequired();
 
                 entity.Property(e => e.ModifiedBy).HasMaxLength(200);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Planned).HasColumnType("money");
+
+                entity.Property(e => e.ProgressAt)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.TblSrdailyReporting)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRDailyReporting_tbl_Projects");
             });
 
-            modelBuilder.Entity<TblSrdailyReportingOtherInfo>(entity =>
+            modelBuilder.Entity<TblSrdailyReportingDelays>(entity =>
             {
-                entity.HasKey(e => e.Droiid);
+                entity.HasKey(e => e.DelayId);
 
-                entity.ToTable("tbl_SRDailyReportingOtherInfo");
+                entity.ToTable("tbl_SRDailyReportingDelays");
 
-                entity.Property(e => e.Droiid).HasColumnName("DROIID");
+                entity.Property(e => e.DelayId).HasColumnName("DelayID");
 
-                entity.Property(e => e.Cause).HasMaxLength(500);
+                entity.Property(e => e.Cause)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
+
+                entity.Property(e => e.DescriptionofDelay).IsRequired();
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Responsible)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.TimeTaken).HasColumnType("datetime");
+
+                entity.HasOne(d => d.DailyRep)
+                    .WithMany(p => p.TblSrdailyReportingDelays)
+                    .HasForeignKey(d => d.DailyRepId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRDailyReportingDelays_tbl_SRDailyReporting");
+            });
+
+            modelBuilder.Entity<TblSrdailyReportingDelaysTemp>(entity =>
+            {
+                entity.HasKey(e => e.DelayId);
+
+                entity.ToTable("tbl_SRDailyReportingDelaysTemp");
+
+                entity.Property(e => e.DelayId).HasColumnName("DelayID");
+
+                entity.Property(e => e.Cause)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
+
+                entity.Property(e => e.DescriptionofDelay).IsRequired();
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Responsible)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.TimeTaken).HasColumnType("datetime");
+
+                entity.HasOne(d => d.DailyRep)
+                    .WithMany(p => p.TblSrdailyReportingDelaysTemp)
+                    .HasForeignKey(d => d.DailyRepId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRDailyReportingDelaysTemp_tbl_SRDailyReportingTemp");
+            });
+
+            modelBuilder.Entity<TblSrdailyReportingIssues>(entity =>
+            {
+                entity.HasKey(e => e.IssueId);
+
+                entity.ToTable("tbl_SRDailyReportingIssues");
+
+                entity.Property(e => e.IssueId).HasColumnName("IssueID");
 
                 entity.Property(e => e.CreatedBy).HasMaxLength(200);
 
@@ -2824,14 +3624,77 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Responsible).HasMaxLength(100);
+                entity.HasOne(d => d.DailyRep)
+                    .WithMany(p => p.TblSrdailyReportingIssues)
+                    .HasForeignKey(d => d.DailyRepId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRDailyReportingIssues_tbl_SRDailyReporting");
+            });
 
-                entity.Property(e => e.TimeTaken).HasMaxLength(100);
+            modelBuilder.Entity<TblSrdailyReportingIssuesTemp>(entity =>
+            {
+                entity.HasKey(e => e.IssueId);
+
+                entity.ToTable("tbl_SRDailyReportingIssuesTemp");
+
+                entity.Property(e => e.IssueId).HasColumnName("IssueID");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.DailyRep)
-                    .WithMany(p => p.TblSrdailyReportingOtherInfo)
+                    .WithMany(p => p.TblSrdailyReportingIssuesTemp)
                     .HasForeignKey(d => d.DailyRepId)
-                    .HasConstraintName("FK_tbl_SRDailyReportingOtherInfo_tbl_SRDailyReporting");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRDailyReportingIssuesTemp_tbl_SRDailyReportingTemp");
+            });
+
+            modelBuilder.Entity<TblSrdailyReportingTemp>(entity =>
+            {
+                entity.HasKey(e => e.DailyRepId);
+
+                entity.ToTable("tbl_SRDailyReportingTemp");
+
+                entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
+
+                entity.Property(e => e.ConstructionActivities).IsRequired();
+
+                entity.Property(e => e.ConstructionActual).HasColumnType("money");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DailyProgress).IsRequired();
+
+                entity.Property(e => e.FollowingDayPlan).IsRequired();
+
+                entity.Property(e => e.GeneralSummary).IsRequired();
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Planned).HasColumnType("money");
+
+                entity.Property(e => e.ProgressAt)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.TblSrdailyReportingTemp)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_SRDailyReportingTemp_tbl_Projects");
             });
 
             modelBuilder.Entity<TblSrfileAttachments>(entity =>
@@ -2844,25 +3707,11 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Ctqid).HasColumnName("CTQID");
-
-                entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
-
                 entity.Property(e => e.DocTypeId).HasColumnName("DocTypeID");
 
                 entity.Property(e => e.Ncrid).HasColumnName("NCRID");
 
                 entity.Property(e => e.UploadedFile).HasMaxLength(100);
-
-                entity.HasOne(d => d.Ctq)
-                    .WithMany(p => p.TblSrfileAttachments)
-                    .HasForeignKey(d => d.Ctqid)
-                    .HasConstraintName("FK_tbl_SRFileAttachments_tbl_SRConstructionTechnicalQueries");
-
-                entity.HasOne(d => d.DailyRep)
-                    .WithMany(p => p.TblSrfileAttachments)
-                    .HasForeignKey(d => d.DailyRepId)
-                    .HasConstraintName("FK_tbl_SRFileAttachments_tbl_SRDailyReporting");
 
                 entity.HasOne(d => d.DocType)
                     .WithMany(p => p.TblSrfileAttachments)
@@ -3812,6 +4661,13 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Description).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<ZoneArea>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Title).HasMaxLength(250);
             });
 
             OnModelCreatingPartial(modelBuilder);
