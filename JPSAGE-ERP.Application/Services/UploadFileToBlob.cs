@@ -17,7 +17,7 @@ namespace JPSAGE_ERP.Application.Services
         public IConfiguration Configuration { get; }
         public async Task<FileUploadResult> UploadFile(string containerName, byte[] contentFile, string extension, string contentType, string contentFileName)
         {
-            var account = CloudStorageAccount.Parse(Configuration["DefaultConnection"]);
+            var account = CloudStorageAccount.Parse(Configuration["AzureBlobConnectionString"]);
             var client = account.CreateCloudBlobClient();
 
             var container = client.GetContainerReference(containerName);

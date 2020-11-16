@@ -24,8 +24,8 @@ namespace JPSAGE_ERP.Application.Validators
                 .NotEmpty().WithMessage("Enter a valid value");
             RuleFor(x => x.Planned)
                 .NotEmpty().WithMessage("Enter a valid value");
-            RuleFor(x => x.DailyReportingProgressMeasurement)
-                .NotNull().WithMessage("The  Progress measurement report form shouldn't be empty");
+            //RuleFor(x => x.DailyReportingProgressMeasurement)
+            //    .NotNull().WithMessage("The  Progress measurement report form shouldn't be empty");
         }
     }
 }

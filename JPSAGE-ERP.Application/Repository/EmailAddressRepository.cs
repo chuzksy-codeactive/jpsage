@@ -1,5 +1,5 @@
 ﻿using JPSAGE_ERP.Application.Interfaces;
-using JPSAGE_ERP.Infrastructure.Data.Context;
+using JPSAGE_ERP.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

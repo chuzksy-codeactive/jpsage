@@ -1,5 +1,5 @@
-﻿using JPSAGE_ERP.Domain.Entities;
-using JPSAGE_ERP.Infrastructure.Data.Context;
+﻿using JPSAGE_ERP.Domain;
+using JPSAGE_ERP.Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

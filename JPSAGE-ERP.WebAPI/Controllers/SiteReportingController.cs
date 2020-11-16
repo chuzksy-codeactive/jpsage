@@ -5,6 +5,7 @@ using JPSAGE_ERP.Application.Models.Responses;
 using JPSAGE_ERP.Application.Models.SiteReporting;
 using JPSAGE_ERP.Application.Services;
 using JPSAGE_ERP.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,7 @@ using System.Threading.Tasks;
 namespace JPSAGE_ERP.WebAPI.Controllers
 {
     [Route("api/v1/sitereports")]
+    [Authorize]
     [ApiController]
     public class SiteReportingController : ControllerBase
     {
@@ -46,7 +48,8 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                 IRepository<TblAuthList> auditRepository,
                 IRepository<TblStaffBioData> staffRepository,
                 IOptions<FileSettings> fileSettings,
-                IUploadFileToBlob uploadFile
+                IUploadFileToBlob uploadFile,
+                IConfiguration configuration
             )
         {
             _tblSrdailyReportingTemp = tblSrdailyReportingTemp;
@@ -60,6 +63,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
             _codeGeneratorRepository = codeGeneratorRepository;
             _fileSettings = fileSettings;
             _uploadFile = uploadFile;
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -99,13 +103,16 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                     if (files[i] != null && files[i].Length > 0)
                     {
                         var extension = Path.GetExtension(files[i].FileName);
-                        if (!_fileSettings.Value.FileFormat.Contains(extension.ToLower()))
+                        string fileFormat = Configuration["FileFormat"];
+                        long fileSize = long.Parse(Configuration["FileSize"]);
+
+                        if (!fileFormat.Contains(extension.ToLower()))
                         {
                             errors.Add($"File[{Array.IndexOf(files.ToArray(), files[i])}]", $"{Path.GetFileNameWithoutExtension(files[i].FileName)} file failed to upload");
                             invalidFiles.Add(files[i]);
                         }
 
-                        if (_fileSettings.Value.FileSize < files[i].Length)
+                        if (fileSize < files[i].Length)
                         {
                             errors.Add($"File[{Array.IndexOf(files.ToArray(), files[i])}]", $"{Path.GetFileNameWithoutExtension(files[i].FileName)} file size is should not be more than 10mb");
                             invalidFiles.Add(files[i]);
@@ -124,7 +131,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
 
             if (fileAttachments != null)
             {
-                if (fileAttachments.PermitToWork.Count > 0)
+                if (fileAttachments.PermitToWork != null && fileAttachments.PermitToWork.Count > 0)
                 {
                     errors = HandleFileValidation(fileAttachments.PermitToWork);
 
@@ -134,7 +141,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                     }
                 }
 
-                if (fileAttachments.SecurityReport.Count > 0)
+                if (fileAttachments.SecurityReport != null && fileAttachments.SecurityReport.Count > 0)
                 {
                     errors = HandleFileValidation(fileAttachments.SecurityReport);
 
@@ -144,7 +151,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                     }
                 }
 
-                if (fileAttachments.ProgressPictures.Count > 0)
+                if (fileAttachments.ProgressPictures != null && fileAttachments.ProgressPictures.Count > 0)
                 {
                     errors = HandleFileValidation(fileAttachments.ProgressPictures);
 
@@ -154,7 +161,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                     }
                 }
 
-                if (fileAttachments.QAQCReport.Count > 0)
+                if (fileAttachments.QAQCReport != null && fileAttachments.QAQCReport.Count > 0)
                 {
                     errors = HandleFileValidation(fileAttachments.QAQCReport);
 
@@ -164,7 +171,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                     }
                 }
 
-                if (fileAttachments.LogisticReport.Count > 0)
+                if (fileAttachments.LogisticReport != null && fileAttachments.LogisticReport.Count > 0)
                 {
                     errors = HandleFileValidation(fileAttachments.LogisticReport);
 
@@ -174,7 +181,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                     }
                 }
 
-                if (fileAttachments.SitePersonnelLogReport.Count > 0)
+                if (fileAttachments.SitePersonnelLogReport != null && fileAttachments.SitePersonnelLogReport.Count > 0)
                 {
                     errors = HandleFileValidation(fileAttachments.PermitToWork);
 
@@ -184,7 +191,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                     }
                 }
 
-                if (fileAttachments.MaterialReport.Count > 0)
+                if (fileAttachments.MaterialReport != null && fileAttachments.MaterialReport.Count > 0)
                 {
                     errors = HandleFileValidation(fileAttachments.MaterialReport);
 
@@ -194,7 +201,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                     }
                 }
 
-                if (fileAttachments.MocReport.Count > 0)
+                if (fileAttachments.MocReport != null && fileAttachments.MocReport.Count > 0)
                 {
                     errors = HandleFileValidation(fileAttachments.MocReport);
 
@@ -214,7 +221,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new ErrorResponse<Dictionary<string, string[]>> 
+                return BadRequest(new ErrorResponse<Dictionary<string, string[]>>
                 { 
                     success = false,
                     message = "Your site reporting creation request failed",
@@ -237,6 +244,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
             };
 
             var dailyReport = await _tblSrdailyReportingTemp.CreateAsync(dailyReportEntity);
+            await _tblSrdailyReportingTemp.SaveChangesAsync();
 
             if (!dailyReport)
             {
@@ -347,52 +355,76 @@ namespace JPSAGE_ERP.WebAPI.Controllers
             {
                 var attachments = dailyReportForm.DailyReportingFileAttachments;
 
-                if (attachments.PermitToWork.Count > 0)
+                if (attachments.PermitToWork != null && attachments.PermitToWork.Count > 0)
                 {
-                    await ProcessFileContents(attachments.PermitToWork, dailyReportEntity.DailyRepId);
-                    await ProcessFileUpload(EDailySiteReport.PermitToWork.GetDescription(), fileObjects, attachments);
+                    var fileObj = await ProcessFileContents(attachments.PermitToWork, dailyReportEntity.DailyRepId);
+
+                    var serializedFileObj = JsonConvert.SerializeObject(fileObj);
+
+                    await ProcessFileUpload(EDailySiteReport.PermitToWork.GetDescription(), serializedFileObj, attachments);
                 }
 
-                if (attachments.SecurityReport.Count > 0)
+                if (attachments.SecurityReport != null && attachments.SecurityReport.Count > 0)
                 {
-                    await ProcessFileContents(attachments.SecurityReport, dailyReportEntity.DailyRepId);
-                    await ProcessFileUpload(EDailySiteReport.SecurityReport.GetDescription(), fileObjects, attachments);
+                    var fileObj = await ProcessFileContents(attachments.SecurityReport, dailyReportEntity.DailyRepId);
+
+                    var serializedFileObj = JsonConvert.SerializeObject(fileObj);
+
+                    await ProcessFileUpload(EDailySiteReport.SecurityReport.GetDescription(), serializedFileObj, attachments);
                 }
 
-                if (attachments.ProgressPictures.Count > 0)
+                if (attachments.ProgressPictures != null && attachments.ProgressPictures.Count > 0)
                 {
-                    await ProcessFileContents(attachments.ProgressPictures, dailyReportEntity.DailyRepId);
-                    await ProcessFileUpload(EDailySiteReport.ProgressPictures.GetDescription(), fileObjects, attachments);
+                    var fileObj = await ProcessFileContents(attachments.ProgressPictures, dailyReportEntity.DailyRepId);
+
+                    var serializedFileObj = JsonConvert.SerializeObject(fileObj);
+
+                    await ProcessFileUpload(EDailySiteReport.ProgressPictures.GetDescription(), serializedFileObj, attachments);
                 }
 
-                if (attachments.QAQCReport.Count > 0)
+                if (attachments.QAQCReport != null && attachments.QAQCReport.Count > 0)
                 {
-                    await ProcessFileContents(attachments.QAQCReport, dailyReportEntity.DailyRepId);
-                    await ProcessFileUpload(EDailySiteReport.QAQCReport.GetDescription(), fileObjects, attachments);
+                    var fileObj = await ProcessFileContents(attachments.QAQCReport, dailyReportEntity.DailyRepId);
+
+                    var serializedFileObj = JsonConvert.SerializeObject(fileObj);
+
+                    await ProcessFileUpload(EDailySiteReport.QAQCReport.GetDescription(), serializedFileObj, attachments);
                 }
 
-                if (attachments.LogisticReport.Count > 0)
+                if (attachments.LogisticReport != null && attachments.LogisticReport.Count > 0)
                 {
-                    await ProcessFileContents(attachments.LogisticReport, dailyReportEntity.DailyRepId);
-                    await ProcessFileUpload(EDailySiteReport.LogisticReport.GetDescription(), fileObjects, attachments);
+                    var fileObj = await ProcessFileContents(attachments.LogisticReport, dailyReportEntity.DailyRepId);
+
+                    var serializedFileObj = JsonConvert.SerializeObject(fileObj);
+
+                    await ProcessFileUpload(EDailySiteReport.LogisticReport.GetDescription(), serializedFileObj, attachments);
                 }
 
-                if (attachments.SitePersonnelLogReport.Count > 0)
+                if (attachments.SitePersonnelLogReport != null && attachments.SitePersonnelLogReport.Count > 0)
                 {
-                    await ProcessFileContents(attachments.SitePersonnelLogReport, dailyReportEntity.DailyRepId);
-                    await ProcessFileUpload(EDailySiteReport.SitePersonnelLogReport.GetDescription(), fileObjects, attachments);
+                    var fileObj = await ProcessFileContents(attachments.SitePersonnelLogReport, dailyReportEntity.DailyRepId);
+
+                    var serializedFileObj = JsonConvert.SerializeObject(fileObj);
+
+                    await ProcessFileUpload(EDailySiteReport.SitePersonnelLogReport.GetDescription(), serializedFileObj, attachments);
                 }
 
-                if (attachments.MaterialReport.Count > 0)
+                if (attachments.MaterialReport != null && attachments.MaterialReport.Count > 0)
                 {
-                    await ProcessFileContents(attachments.MaterialReport, dailyReportEntity.DailyRepId);
-                    await ProcessFileUpload(EDailySiteReport.MaterialReprot.GetDescription(), fileObjects, attachments);
+                    var fileObj = await ProcessFileContents(attachments.MaterialReport, dailyReportEntity.DailyRepId);
+
+                    var serializedFileObj = JsonConvert.SerializeObject(fileObj);
+
+                    await ProcessFileUpload(EDailySiteReport.MaterialReprot.GetDescription(), serializedFileObj, attachments);
                 }
 
-                if (attachments.MocReport.Count > 0)
+                if (attachments.MocReport != null && attachments.MocReport.Count > 0)
                 {
-                    await ProcessFileContents(attachments.MocReport, dailyReportEntity.DailyRepId);
-                    await ProcessFileUpload(EDailySiteReport.MOCReport.GetDescription(), fileObjects, attachments);
+                    var fileObj = await ProcessFileContents(attachments.MocReport, dailyReportEntity.DailyRepId);
+
+                    var serializedFileObj = JsonConvert.SerializeObject(fileObj);
+
+                    await ProcessFileUpload(EDailySiteReport.MOCReport.GetDescription(), serializedFileObj, attachments);
                 }
             }
 

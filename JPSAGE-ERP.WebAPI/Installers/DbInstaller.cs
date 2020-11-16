@@ -1,10 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Hangfire;
+using JPSAGE_ERP.Domain;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using JPSAGE_ERP.Domain;
-using JPSAGE_ERP.Infrastructure.Data.Context;
-using Hangfire;
 
 namespace JPSAGE_ERP.WebAPI.Installers
 {
