@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Hangfire;
+using JPSAGE_ERP.Domain;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using JPSAGE_ERP.Domain;
 
 namespace JPSAGE_ERP.WebAPI.Installers
 {
@@ -19,6 +20,9 @@ namespace JPSAGE_ERP.WebAPI.Installers
                     .UseLoggerFactory(ERPLoggerFactory)
                     .UseSqlServer(
                         configuration["DefaultConnection"]));
+
+            services.AddHangfire(x => x.UseSqlServerStorage(configuration["DefaultConnection"]));
+            services.AddHangfireServer();
         }
     }
 }

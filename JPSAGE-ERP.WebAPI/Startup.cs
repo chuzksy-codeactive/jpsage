@@ -1,10 +1,12 @@
 using JPSAGE_ERP.Infrastructure.IoC;
+using JPSAGE_ERP.Application.Helpers;
 using JPSAGE_ERP.WebAPI.Installers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Hangfire;
 
 namespace JPSAGE_ERP.WebAPI
 {
@@ -28,21 +30,17 @@ namespace JPSAGE_ERP.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseSwagger();
-
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-
-            });
 
             app.UseCors("EnableCORS");
             app.UseHttpsRedirection();
@@ -50,6 +48,7 @@ namespace JPSAGE_ERP.WebAPI
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseHangfireDashboard();
 
             //app.UseEndpoints(endpoints =>
             //{

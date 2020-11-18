@@ -7,12 +7,12 @@ namespace JPSAGE_ERP.Domain.Entities
     {
         public int StaffRoleId { get; set; }
         public int? WfdefId { get; set; }
-        public int? StaffId { get; set; }
-        public string Checker { get; set; }
-        public string Authorizer { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public int? CheckerId { get; set; }
+        public int? AuthoriserId { get; set; }
 
-        public virtual TblStaffBioData Staff { get; set; }
+        public virtual TblStaffBioData Authoriser { get; set; }
+        public virtual TblStaffBioData Checker { get; set; }
         public virtual TblWorkflowProcessDef Wfdef { get; set; }
     }
 }

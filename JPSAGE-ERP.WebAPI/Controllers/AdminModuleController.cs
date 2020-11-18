@@ -2457,14 +2457,17 @@ namespace JPSAGE_ERP.WebAPI.Controllers
         public async Task<IActionResult> CreateWorkFlowCheckerStaffRole([FromBody] CreateStaffRoleFormModel model)
         {
             var userId = GetUserId();
+
             var tblStaffAddress = await _staffRepository.FirstOrDefaultAsync(x => x.StaffId == model.StaffId);
+            var staffRoles = await _staffRoleRepository.FirstOrDefaultAsync(x => x.WfdefId == model.WFDefId);
+
             if (ModelState.IsValid)
             {
                 var staffRole = new TblStaffRoles
                 {
                     WfdefId = model.WFDefId,
-                    StaffId = model.StaffId,
-                    Checker = tblStaffAddress.OfficeEmailAddress,
+                    CheckerId = staffRoles.CheckerId,
+                    AuthoriserId = staffRoles.AuthoriserId,
                     CreatedDate = DateTime.Now
                 };
 
@@ -2511,14 +2514,15 @@ namespace JPSAGE_ERP.WebAPI.Controllers
         {
             var userId = GetUserId();
             var tblStaffAddress = await _staffRepository.FirstOrDefaultAsync(x => x.StaffId == model.StaffId);
+            var staffRoles = await _staffRoleRepository.FirstOrDefaultAsync(x => x.WfdefId == model.WFDefId);
 
             if (ModelState.IsValid)
             {
                 var staffRole = new TblStaffRoles
                 {
                     WfdefId = model.WFDefId,
-                    StaffId = model.StaffId,
-                    Authorizer = tblStaffAddress.OfficeEmailAddress,
+                    CheckerId = staffRoles.CheckerId,
+                    AuthoriserId = staffRoles.AuthoriserId,
                     CreatedDate = DateTime.Now
                 };
 

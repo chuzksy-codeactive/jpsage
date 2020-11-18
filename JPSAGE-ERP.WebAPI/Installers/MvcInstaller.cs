@@ -1,5 +1,4 @@
-﻿using JPSAGE_ERP.Application.Helpers;
-using JPSAGE_ERP.Domain;
+﻿using JPSAGE_ERP.Domain;
 using JPSAGE_ERP.Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -11,8 +10,6 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Text;
 
 namespace JPSAGE_ERP.WebAPI.Installers
@@ -32,7 +29,7 @@ namespace JPSAGE_ERP.WebAPI.Installers
                 options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2
             );
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddCors(options =>
             {

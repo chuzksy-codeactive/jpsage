@@ -19,22 +19,37 @@ namespace JPSAGE_ERP.Application.Repository
 
         private List<string> EmailAddress { get; set; }
 
-        public async Task<List<string>> SendEmailAddress(int EndPointId, int approvalId)
+        public async Task<List<string>> SendEmailAddress(int endPointId, int approvalId)
         {
             try
             {
                 if (approvalId == 1)
                 {
-                    EmailAddress = await _context.TblStaffRoles.Where(emailGroup => emailGroup.WfdefId == EndPointId)
-                                                             .Select(email => email.Checker)
-                                                             .ToListAsync();
+                    var staffRole = await _context.TblStaffRoles.SingleOrDefaultAsync(x => x.WfdefId == endPointId);
+
+                    if (staffRole == null)
+                    {
+                        throw new ArgumentNullException(nameof(staffRole));
+                    }
+
+                    var checker = await _context.TblStaffBioData.FirstOrDefaultAsync(x => x.StaffId == staffRole.CheckerId);
+
+                    EmailAddress.Add(checker.OfficeEmailAddress);
 
                 }
+
                 if (approvalId == 2)
                 {
-                    EmailAddress = await _context.TblStaffRoles.Where(emailGroup => emailGroup.WfdefId == EndPointId)
-                                                             .Select(email => email.Authorizer)
-                                                             .ToListAsync();
+                    var staffRole = await _context.TblStaffRoles.SingleOrDefaultAsync(x => x.WfdefId == endPointId);
+
+                    if (staffRole == null)
+                    {
+                        throw new ArgumentNullException(nameof(staffRole));
+                    }
+
+                    var authorizer = await _context.TblStaffBioData.FirstOrDefaultAsync(x => x.StaffId == staffRole.AuthoriserId);
+
+                    EmailAddress.Add(authorizer.OfficeEmailAddress);
                 }
 
 

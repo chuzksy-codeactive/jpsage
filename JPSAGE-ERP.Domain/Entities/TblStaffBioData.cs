@@ -11,8 +11,16 @@ namespace JPSAGE_ERP.Domain.Entities
             TblAuthChecker = new HashSet<TblAuthChecker>();
             TblEndUserRequisitionProducts = new HashSet<TblEndUserRequisitionProducts>();
             TblEventDetails = new HashSet<TblEventDetails>();
-            TblSrconstructionTechnicalQueries = new HashSet<TblSrconstructionTechnicalQueries>();
-            TblStaffRoles = new HashSet<TblStaffRoles>();
+            TblSrconstructionTechnicalQueriesAttentionNavigation = new HashSet<TblSrconstructionTechnicalQueries>();
+            TblSrconstructionTechnicalQueriesStaff = new HashSet<TblSrconstructionTechnicalQueries>();
+            TblSrconstructionTechnicalQueriesTempAttentionNavigation = new HashSet<TblSrconstructionTechnicalQueriesTemp>();
+            TblSrconstructionTechnicalQueriesTempStaff = new HashSet<TblSrconstructionTechnicalQueriesTemp>();
+            TblSrconstructionTechnicalQueryRepliesAuthoriser = new HashSet<TblSrconstructionTechnicalQueryReplies>();
+            TblSrconstructionTechnicalQueryRepliesChecker = new HashSet<TblSrconstructionTechnicalQueryReplies>();
+            TblSrconstructionTechnicalQueryRepliesTempAuthoriser = new HashSet<TblSrconstructionTechnicalQueryRepliesTemp>();
+            TblSrconstructionTechnicalQueryRepliesTempChecker = new HashSet<TblSrconstructionTechnicalQueryRepliesTemp>();
+            TblStaffRolesAuthoriser = new HashSet<TblStaffRoles>();
+            TblStaffRolesChecker = new HashSet<TblStaffRoles>();
         }
 
         public int StaffId { get; set; }
@@ -47,7 +55,15 @@ namespace JPSAGE_ERP.Domain.Entities
         public virtual ICollection<TblAuthChecker> TblAuthChecker { get; set; }
         public virtual ICollection<TblEndUserRequisitionProducts> TblEndUserRequisitionProducts { get; set; }
         public virtual ICollection<TblEventDetails> TblEventDetails { get; set; }
-        public virtual ICollection<TblSrconstructionTechnicalQueries> TblSrconstructionTechnicalQueries { get; set; }
-        public virtual ICollection<TblStaffRoles> TblStaffRoles { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueries> TblSrconstructionTechnicalQueriesAttentionNavigation { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueries> TblSrconstructionTechnicalQueriesStaff { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueriesTemp> TblSrconstructionTechnicalQueriesTempAttentionNavigation { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueriesTemp> TblSrconstructionTechnicalQueriesTempStaff { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueryReplies> TblSrconstructionTechnicalQueryRepliesAuthoriser { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueryReplies> TblSrconstructionTechnicalQueryRepliesChecker { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueryRepliesTemp> TblSrconstructionTechnicalQueryRepliesTempAuthoriser { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueryRepliesTemp> TblSrconstructionTechnicalQueryRepliesTempChecker { get; set; }
+        public virtual ICollection<TblStaffRoles> TblStaffRolesAuthoriser { get; set; }
+        public virtual ICollection<TblStaffRoles> TblStaffRolesChecker { get; set; }
     }
 }
