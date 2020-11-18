@@ -23,4 +23,21 @@ namespace JPSAGE_ERP.Application.Models.Responses
         public string FileName { get; set; }
         public string Url { get; set; }
     }
+
+    public class BaseResponse
+    {
+        public bool success { get; set; }
+        public string message { get; set; }
+    }
+    public static class Response<T>
+    {
+        public static BaseResponse InternalError(string exceptionMessage)
+        {
+            return new BaseResponse
+            {
+                success = false,
+                message = exceptionMessage
+            };
+        }
+    }
 }

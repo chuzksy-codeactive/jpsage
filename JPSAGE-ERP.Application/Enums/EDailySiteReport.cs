@@ -13,10 +13,10 @@ namespace JPSAGE_ERP.Application.Enums
         [Description("ProgressPictures")]
         ProgressPictures,
 
-        [Description("QAQCReport")]
+        [Description("Qaqcreport")]
         QAQCReport,
 
-        [Description("LogisticReport")]
+        [Description("LogisticsReport")]
         LogisticReport,
 
         [Description("SitePersonnelLogReport")]
@@ -25,7 +25,7 @@ namespace JPSAGE_ERP.Application.Enums
         [Description("MaterialReport")]
         MaterialReprot,
 
-        [Description("MOCReport")]
+        [Description("Mocreport")]
         MOCReport,
     }
 }

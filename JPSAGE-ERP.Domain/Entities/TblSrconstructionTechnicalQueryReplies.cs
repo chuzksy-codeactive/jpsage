@@ -17,7 +17,12 @@ namespace JPSAGE_ERP.Domain.Entities
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+        public int? CheckerId { get; set; }
+        public int? AuthoriserId { get; set; }
+        public DateTime? QueryCloseDate { get; set; }
 
+        public virtual TblStaffBioData Authoriser { get; set; }
+        public virtual TblStaffBioData Checker { get; set; }
         public virtual TblSrconstructionTechnicalQueries Ctq { get; set; }
     }
 }

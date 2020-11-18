@@ -10,6 +10,9 @@ namespace JPSAGE_ERP.Application.Validators
             RuleFor(x => x.ProjectId)
                 .NotEmpty().WithMessage("Enter a valid value")
                 .GreaterThan(0).WithMessage("ProjectId must be an integer");
+            RuleFor(x => x.WFDefId)
+                .NotEmpty().WithMessage("Enter a valid value")
+                .GreaterThan(0).WithMessage("ProjectId must be an integer");
             RuleFor(x => x.GeneralSummary)
                 .NotEmpty().WithMessage("Enter a valid value");
             RuleFor(x => x.ConstructionActivities)

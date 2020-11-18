@@ -16,6 +16,7 @@ namespace JPSAGE_ERP.Infrastructure.IoC
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IContractAwardRepository, ContractAwardRepository>();
             services.AddScoped<IEmailAddressRepository, EmailAddressRepository>();
+            services.AddScoped<ISiteReportRepository, SiteReportRepository>();
             services.AddScoped<IEurRepository, EurRepository>();
             services.AddScoped<IMMRepository, MMRepository>();
             services.AddScoped<IEmailSender, EmailSender>();
