@@ -7,6 +7,9 @@ namespace JPSAGE_ERP.Domain
 {
     public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public ApplicationDbContext()
+        {
+        }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -567,8 +570,6 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.IsApproved).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.Reason).HasMaxLength(1000);
 
                 entity.Property(e => e.StaffId).HasColumnName("StaffID");
@@ -595,8 +596,6 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.AuthId).HasColumnName("AuthID");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.IsApproved).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Reason).HasMaxLength(1000);
 
@@ -2248,8 +2247,7 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.PayReqNumber)
                     .IsRequired()
-                    .HasMaxLength(100)
-                    .HasDefaultValueSql("(newid())");
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.Payee)
                     .IsRequired()
@@ -3086,7 +3084,7 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.Ctqid).HasColumnName("CTQID");
 
-                entity.Property(e => e.DrawingFile).HasMaxLength(100);
+                entity.Property(e => e.DrawingFile).HasMaxLength(500);
 
                 entity.Property(e => e.ModifiedBy).HasMaxLength(200);
 
@@ -3115,7 +3113,7 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.Ctqid).HasColumnName("CTQID");
 
-                entity.Property(e => e.DrawingFile).HasMaxLength(100);
+                entity.Property(e => e.DrawingFile).HasMaxLength(500);
 
                 entity.Property(e => e.ModifiedBy).HasMaxLength(200);
 
@@ -3138,7 +3136,11 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ReplyId).HasColumnName("ReplyID");
 
+                entity.Property(e => e.AuthoriserId).HasColumnName("AuthoriserID");
+
                 entity.Property(e => e.AuthoriserReplyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CheckerId).HasColumnName("CheckerID");
 
                 entity.Property(e => e.CheckerReplyDate).HasColumnType("datetime");
 
@@ -3153,6 +3155,18 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.ModifiedBy).HasMaxLength(200);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.QueryCloseDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Authoriser)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueryRepliesAuthoriser)
+                    .HasForeignKey(d => d.AuthoriserId)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueryReplies_tbl_StaffBioData1");
+
+                entity.HasOne(d => d.Checker)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueryRepliesChecker)
+                    .HasForeignKey(d => d.CheckerId)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueryReplies_tbl_StaffBioData");
 
                 entity.HasOne(d => d.Ctq)
                     .WithMany(p => p.TblSrconstructionTechnicalQueryReplies)
@@ -3169,7 +3183,11 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ReplyId).HasColumnName("ReplyID");
 
+                entity.Property(e => e.AuthoriserId).HasColumnName("AuthoriserID");
+
                 entity.Property(e => e.AuthoriserReplyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CheckerId).HasColumnName("CheckerID");
 
                 entity.Property(e => e.CheckerReplyDate).HasColumnType("datetime");
 
@@ -3184,6 +3202,18 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.ModifiedBy).HasMaxLength(200);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.QueryCloseDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Authoriser)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueryRepliesTempAuthoriser)
+                    .HasForeignKey(d => d.AuthoriserId)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueryRepliesTemp_tbl_StaffBioData1");
+
+                entity.HasOne(d => d.Checker)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueryRepliesTempChecker)
+                    .HasForeignKey(d => d.CheckerId)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueryRepliesTemp_tbl_StaffBioData");
 
                 entity.HasOne(d => d.Ctq)
                     .WithMany(p => p.TblSrconstructionTechnicalQueryRepliesTemp)
@@ -3206,29 +3236,29 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
 
-                entity.Property(e => e.LogisticsReport).HasMaxLength(100);
+                entity.Property(e => e.LogisticsReport).HasMaxLength(500);
 
-                entity.Property(e => e.MaterialReport).HasMaxLength(100);
+                entity.Property(e => e.MaterialReport).HasMaxLength(500);
 
                 entity.Property(e => e.Mocreport)
                     .HasColumnName("MOCReport")
-                    .HasMaxLength(100);
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.ModifiedBy).HasMaxLength(200);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.PermitToWork).HasMaxLength(100);
+                entity.Property(e => e.PermitToWork).HasMaxLength(500);
 
-                entity.Property(e => e.ProgressPictures).HasMaxLength(100);
+                entity.Property(e => e.ProgressPictures).HasMaxLength(500);
 
                 entity.Property(e => e.Qaqcreport)
                     .HasColumnName("QAQCReport")
-                    .HasMaxLength(100);
+                    .HasMaxLength(500);
 
-                entity.Property(e => e.SecurityReport).HasMaxLength(100);
+                entity.Property(e => e.SecurityReport).HasMaxLength(500);
 
-                entity.Property(e => e.SitePersonnelLogReport).HasMaxLength(100);
+                entity.Property(e => e.SitePersonnelLogReport).HasMaxLength(500);
 
                 entity.HasOne(d => d.DailyRep)
                     .WithMany(p => p.TblSrdailyReportFileAttachments)
@@ -3251,29 +3281,29 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.DailyRepId).HasColumnName("DailyRepID");
 
-                entity.Property(e => e.LogisticsReport).HasMaxLength(100);
+                entity.Property(e => e.LogisticsReport).HasMaxLength(500);
 
-                entity.Property(e => e.MaterialReport).HasMaxLength(100);
+                entity.Property(e => e.MaterialReport).HasMaxLength(500);
 
                 entity.Property(e => e.Mocreport)
                     .HasColumnName("MOCReport")
-                    .HasMaxLength(100);
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.ModifiedBy).HasMaxLength(200);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.PermitToWork).HasMaxLength(100);
+                entity.Property(e => e.PermitToWork).HasMaxLength(500);
 
-                entity.Property(e => e.ProgressPictures).HasMaxLength(100);
+                entity.Property(e => e.ProgressPictures).HasMaxLength(500);
 
                 entity.Property(e => e.Qaqcreport)
                     .HasColumnName("QAQCReport")
-                    .HasMaxLength(100);
+                    .HasMaxLength(500);
 
-                entity.Property(e => e.SecurityReport).HasMaxLength(100);
+                entity.Property(e => e.SecurityReport).HasMaxLength(500);
 
-                entity.Property(e => e.SitePersonnelLogReport).HasMaxLength(100);
+                entity.Property(e => e.SitePersonnelLogReport).HasMaxLength(500);
 
                 entity.HasOne(d => d.DailyRep)
                     .WithMany(p => p.TblSrdailyReportFileAttachmentsTemp)
@@ -3821,20 +3851,23 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.StaffRoleId).HasColumnName("StaffRoleID");
 
-                entity.Property(e => e.Authorizer).HasMaxLength(100);
+                entity.Property(e => e.AuthoriserId).HasColumnName("AuthoriserID");
 
-                entity.Property(e => e.Checker).HasMaxLength(100);
+                entity.Property(e => e.CheckerId).HasColumnName("CheckerID");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.StaffId).HasColumnName("StaffID");
-
                 entity.Property(e => e.WfdefId).HasColumnName("WFDefID");
 
-                entity.HasOne(d => d.Staff)
-                    .WithMany(p => p.TblStaffRoles)
-                    .HasForeignKey(d => d.StaffId)
-                    .HasConstraintName("FK_tbl_StaffRoles_tbl_StaffBioData");
+                entity.HasOne(d => d.Authoriser)
+                    .WithMany(p => p.TblStaffRolesAuthoriser)
+                    .HasForeignKey(d => d.AuthoriserId)
+                    .HasConstraintName("FK_tbl_StaffRoles_tbl_StaffBioDataAuthoriser");
+
+                entity.HasOne(d => d.Checker)
+                    .WithMany(p => p.TblStaffRolesChecker)
+                    .HasForeignKey(d => d.CheckerId)
+                    .HasConstraintName("FK_tbl_StaffRoles_tbl_StaffBioDataChecker");
 
                 entity.HasOne(d => d.Wfdef)
                     .WithMany(p => p.TblStaffRoles)
@@ -4289,8 +4322,6 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.AdforeignCompanyStatus)
                     .HasColumnName("ADForeignCompanyStatus")
                     .HasMaxLength(20);
-
-                entity.Property(e => e.ApprovalStatus).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.ApprovedBy).HasMaxLength(200);
 

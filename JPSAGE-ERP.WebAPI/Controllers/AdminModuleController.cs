@@ -1,5 +1,4 @@
-﻿using JPSAGE_ERP.Application.Helpers;
-using JPSAGE_ERP.Application.Interfaces;
+﻿using JPSAGE_ERP.Application.Interfaces;
 using JPSAGE_ERP.Application.Models.Admin.Client;
 using JPSAGE_ERP.Application.Models.Admin.Company;
 using JPSAGE_ERP.Application.Models.Admin.Department;
@@ -11,7 +10,6 @@ using JPSAGE_ERP.Application.Models.Admin.Project;
 using JPSAGE_ERP.Application.Models.Admin.StaffForm;
 using JPSAGE_ERP.Application.Models.Admin.WorkFlowProcessDefinition;
 using JPSAGE_ERP.Application.Models.ApprovalWorkFlow;
-using JPSAGE_ERP.Application.Services;
 using JPSAGE_ERP.DataObjects.Admin.Department;
 using JPSAGE_ERP.DataObjects.Admin.ListObjects;
 using JPSAGE_ERP.Domain.Entities;
@@ -20,7 +18,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -2457,14 +2454,17 @@ namespace JPSAGE_ERP.WebAPI.Controllers
         public async Task<IActionResult> CreateWorkFlowCheckerStaffRole([FromBody] CreateStaffRoleFormModel model)
         {
             var userId = GetUserId();
+
             var tblStaffAddress = await _staffRepository.FirstOrDefaultAsync(x => x.StaffId == model.StaffId);
+            var staffRoles = await _staffRoleRepository.FirstOrDefaultAsync(x => x.WfdefId == model.WFDefId);
+
             if (ModelState.IsValid)
             {
                 var staffRole = new TblStaffRoles
                 {
                     WfdefId = model.WFDefId,
-                    StaffId = model.StaffId,
-                    Checker = tblStaffAddress.OfficeEmailAddress,
+                    CheckerId = staffRoles.CheckerId,
+                    AuthoriserId = staffRoles.AuthoriserId,
                     CreatedDate = DateTime.Now
                 };
 
@@ -2511,14 +2511,15 @@ namespace JPSAGE_ERP.WebAPI.Controllers
         {
             var userId = GetUserId();
             var tblStaffAddress = await _staffRepository.FirstOrDefaultAsync(x => x.StaffId == model.StaffId);
+            var staffRoles = await _staffRoleRepository.FirstOrDefaultAsync(x => x.WfdefId == model.WFDefId);
 
             if (ModelState.IsValid)
             {
                 var staffRole = new TblStaffRoles
                 {
                     WfdefId = model.WFDefId,
-                    StaffId = model.StaffId,
-                    Authorizer = tblStaffAddress.OfficeEmailAddress,
+                    CheckerId = staffRoles.CheckerId,
+                    AuthoriserId = staffRoles.AuthoriserId,
                     CreatedDate = DateTime.Now
                 };
 

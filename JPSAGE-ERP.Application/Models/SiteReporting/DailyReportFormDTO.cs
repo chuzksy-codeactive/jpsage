@@ -7,6 +7,7 @@ namespace JPSAGE_ERP.Application.Models.SiteReporting
     public class DailyReportFormDTO
     {
         public int ProjectId { get; set; }
+        public int WFDefId { get; set; }
         public string GeneralSummary { get; set; }
         public string ConstructionActivities { get; set; }
         public string DailyProgress { get; set; }
@@ -55,10 +56,10 @@ namespace JPSAGE_ERP.Application.Models.SiteReporting
         public IFormFileCollection PermitToWork { get; set; }
         public IFormFileCollection SecurityReport { get; set; }
         public IFormFileCollection ProgressPictures { get; set; }
-        public IFormFileCollection QAQCReport { get; set; }
-        public IFormFileCollection LogisticReport { get; set; }
+        public IFormFileCollection Qaqcreport { get; set; }
+        public IFormFileCollection LogisticsReport { get; set; }
         public IFormFileCollection SitePersonnelLogReport { get; set; }
         public IFormFileCollection MaterialReport { get; set; }
-        public IFormFileCollection MocReport { get; set; }
+        public IFormFileCollection Mocreport { get; set; }
     }
 }
