@@ -181,6 +181,38 @@ namespace JPSAGE_ERP.WebAPI.Controllers
         }
         #endregion
 
+        [HttpGet("departments", Name = "GetDepartments")]
+        [ProducesResponseType(typeof(SucessResponse<PagedResponse<IEnumerable<TblDepartments>>>), 200)]
+        public async Task<IActionResult> GetDepartments([FromQuery] ResourceParameters parameters)
+        {
+            var departments = await _siteReportRepository.GetDepartments(parameters);
+
+            var prevLink = departments.HasPrevious ? CreateResourceUri(parameters, ResourceUriType.PreviousPage) : null;
+            var nextLink = departments.HasNext ? CreateResourceUri(parameters, ResourceUriType.NextPage) : null;
+            var currentLink = CreateResourceUri(parameters, ResourceUriType.CurrentPage);
+
+            var pagination = new Pagination
+            {
+                currentPage = currentLink,
+                nextPage = nextLink,
+                previousPage = prevLink,
+                totalPages = departments.TotalPages,
+                perPage = departments.PageSize,
+                totalEntries = departments.TotalCount
+            };
+
+            return Ok(new PagedResponse<IEnumerable<TblDepartments>>
+            {
+                success = true,
+                message = "Departments retrieved successfully",
+                data = departments,
+                meta = new Meta
+                {
+                    pagination = pagination
+                }
+            });
+        }
+
         /// <summary>
         /// This action method handles the creation of 
         /// daily site reports
@@ -322,16 +354,19 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                     await _tblSrdailyReportingDelaysTemp.AddRangeAsync(delayList);
                 }
 
-                var errors = HandleFileValidationDecision(dailyReportForm.DailyReportingFileAttachments);
-
-                if (errors.Count > 0)
+                if (dailyReportForm.DailyReportingFileAttachments != null)
                 {
-                    return BadRequest(new ErrorResponse<object>
+                    var errors = HandleFileValidationDecision(dailyReportForm.DailyReportingFileAttachments);
+
+                    if (errors.Count > 0)
                     {
-                        success = false,
-                        message = "Something went wrong with the uploaded files",
-                        errors = errors
-                    });
+                        return BadRequest(new ErrorResponse<object>
+                        {
+                            success = false,
+                            message = "Something went wrong with the uploaded files",
+                            errors = errors
+                        });
+                    }
                 }
 
                 var fileContentList = new List<byte[]>();
@@ -430,6 +465,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
         /// <param name="objs">The string to serialize from into a object</param>
         /// <returns></returns>
         [NonAction]
+        [AutomaticRetry(Attempts = 0)]
         public async Task ProcessFileUpload(string saveTo, string objs)
         {
             var dailyAttachments = new List<TblSrdailyReportFileAttachmentsTemp>();
@@ -471,5 +507,37 @@ namespace JPSAGE_ERP.WebAPI.Controllers
             public string CreatedBy { get; set; }
             public byte[] File { get; set; }
         }
+        #region CreateResource
+        private string CreateResourceUri(ResourceParameters parameters, ResourceUriType type)
+        {
+            switch (type)
+            {
+                case ResourceUriType.PreviousPage:
+                    return Url.Link("GetDepartments",
+                        new
+                        {
+                            PageNumber = parameters.PageNumber - 1,
+                            parameters.PageSize,
+                        });
+
+                case ResourceUriType.NextPage:
+                    return Url.Link("GetDepartments",
+                        new
+                        {
+                            PageNumber = parameters.PageNumber + 1,
+                            parameters.PageSize,
+                        });
+
+                default:
+                    return Url.Link("GetDepartments",
+                        new
+                        {
+                            parameters.PageNumber,
+                            parameters.PageSize,
+                        });
+            }
+
+        }
+        #endregion
     }
 }
