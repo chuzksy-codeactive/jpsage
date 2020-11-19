@@ -31,15 +31,6 @@ namespace JPSAGE_ERP.WebAPI.Installers
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("EnableCORS", builder =>
-                {
-                    builder.AllowAnyHeader().AllowAnyMethod().AllowCredentials().Build();
-
-                });
-            });
-
             //Specifiying we are going to use Identity Framework
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
