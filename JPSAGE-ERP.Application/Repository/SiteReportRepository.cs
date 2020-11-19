@@ -1,4 +1,5 @@
-﻿using JPSAGE_ERP.Application.Interfaces;
+﻿using JPSAGE_ERP.Application.Helpers;
+using JPSAGE_ERP.Application.Interfaces;
 using JPSAGE_ERP.Domain;
 using JPSAGE_ERP.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,15 @@ namespace JPSAGE_ERP.Application.Repository
             : base(context)
         {
 
+        }
+
+        public Task<PagedList<TblDepartments>> GetDepartments(ResourceParameters parameters)
+        {
+            var query = _context.TblDepartments as IQueryable<TblDepartments>;
+
+            var departments = PagedList<TblDepartments>.Create(query, parameters.PageNumber, parameters.PageSize);
+
+            return departments;
         }
 
         /// <summary>

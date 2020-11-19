@@ -17,7 +17,7 @@
       },
       "applicationUrl": "http://localhost:5000"
     },
-    "EDMS.WebAPI": {
+    "JPSAGE-ERP.WebAPI": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
