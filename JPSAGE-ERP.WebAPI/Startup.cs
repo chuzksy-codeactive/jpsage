@@ -60,7 +60,8 @@ namespace JPSAGE_ERP.WebAPI
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseHangfireDashboard();
-
+            app.UseHangfireServer();
+            
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapControllers();
