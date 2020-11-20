@@ -26,7 +26,11 @@ namespace JPSAGE_ERP.WebAPI
             {
                 options.AddPolicy("EnableCORS", builder =>
                 {
-                    builder.AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                    builder
+                        .WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
 
                 });
             });
