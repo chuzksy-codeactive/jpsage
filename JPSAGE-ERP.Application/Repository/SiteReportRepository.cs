@@ -44,6 +44,8 @@ namespace JPSAGE_ERP.Application.Repository
             var checker = await _context.TblStaffBioData.FirstOrDefaultAsync(x => x.StaffId == staffRole.CheckerId);
             var approver = await _context.TblStaffBioData.FirstOrDefaultAsync(x => x.StaffId == staffRole.AuthoriserId);
 
+            if (checker == null || approver == null) throw new ArgumentNullException(nameof(staffRole));
+
             return (checker.OfficeEmailAddress, approver.OfficeEmailAddress);
         }
     }
