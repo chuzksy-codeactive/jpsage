@@ -52,6 +52,7 @@ namespace JPSAGE_ERP.WebAPI
 
             app.UseCors("EnableCORS");
             app.UseStaticFiles();
+            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

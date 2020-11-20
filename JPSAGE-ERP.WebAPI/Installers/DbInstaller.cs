@@ -22,9 +22,9 @@ namespace JPSAGE_ERP.WebAPI.Installers
                 options
                     .UseLoggerFactory(ERPLoggerFactory)
                     .UseSqlServer(
-                        configuration["DefaultConnection"]));
+                        configuration["DefaultConnection2"]));
 
-            services.AddHangfire(x => x.UseSqlServerStorage(configuration["DefaultConnection"]));
+            services.AddHangfire(c => c.UseMemoryStorage());
             services.AddHangfireServer();
         }
     }
