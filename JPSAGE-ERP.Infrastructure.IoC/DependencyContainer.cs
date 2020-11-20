@@ -13,6 +13,10 @@ namespace JPSAGE_ERP.Infrastructure.IoC
     {
         public static void RegisterServices(IServiceCollection services)
         {
+            // DI for FluentValidator
+            services.AddMvc().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<DailyReportFormDTOValidator>());
+            services.AddTransient<IValidator<DailyReportFormDTO>, DailyReportFormDTOValidator>();
+
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IContractAwardRepository, ContractAwardRepository>();
             services.AddScoped<IEmailAddressRepository, EmailAddressRepository>();
@@ -21,10 +25,6 @@ namespace JPSAGE_ERP.Infrastructure.IoC
             services.AddScoped<IMMRepository, MMRepository>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IUploadFileToBlob, UploadFileToBlob>();
-
-            // DI for FluentValidator
-            services.AddMvc().AddFluentValidation();
-            services.AddTransient<IValidator<DailyReportFormDTO>, DailyReportFormDTOValidator>();
         }
     }
 }

@@ -226,6 +226,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
             try
             {
                 var userId = GetUserId();
+
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(new ErrorResponse<Dictionary<string, string[]>>
@@ -236,7 +237,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                     });
                 }
 
-                var workflowDef = await _tblWorkflowProcessDef.ExistsAsync(x => x.WfdefId == dailyReportForm.WFDefId);
+                var workflowDef = await _tblWorkflowProcessDef.ExistsAsync(x => x.WfdefId == 12);
 
                 if (!workflowDef)
                 {
@@ -387,14 +388,14 @@ namespace JPSAGE_ERP.WebAPI.Controllers
 
                             var serializedFileObj = JsonConvert.SerializeObject(fileObj);
 
-                            BackgroundJob.Enqueue(() => ProcessFileUpload(property.Name, serializedFileObj));
+                            var jobId = BackgroundJob.Enqueue(() => ProcessFileUpload(property.Name, serializedFileObj));
                         }
                     }
                 }
 
                 var tblStaff = await _staffRepository.FirstOrDefaultAsync(x => x.AspnetUserId == userId);
 
-                var (checker, approver) = await _siteReportRepository.GetWorkflowApprovers(dailyReportForm.WFDefId);
+                var (checker, approver) = await _siteReportRepository.GetWorkflowApprovers(12);
 
                 await _emailSender.SendEmailAsync(checker, "Daily Site Report tendered", "Log in to check the reports");
                 await _emailSender.SendEmailAsync(approver, "Daily Site Report tendered", "Log in to check the reports");
