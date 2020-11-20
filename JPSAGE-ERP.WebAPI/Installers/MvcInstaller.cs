@@ -29,8 +29,6 @@ namespace JPSAGE_ERP.WebAPI.Installers
                 options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2
             );
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
             //Specifiying we are going to use Identity Framework
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {

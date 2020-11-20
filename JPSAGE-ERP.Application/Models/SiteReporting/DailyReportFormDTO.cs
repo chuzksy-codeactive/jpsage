@@ -7,7 +7,6 @@ namespace JPSAGE_ERP.Application.Models.SiteReporting
     public class DailyReportFormDTO
     {
         public int ProjectId { get; set; }
-        public int WFDefId { get; set; }
         public string GeneralSummary { get; set; }
         public string ConstructionActivities { get; set; }
         public string DailyProgress { get; set; }

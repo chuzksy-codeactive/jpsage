@@ -24,7 +24,8 @@ namespace JPSAGE_ERP.WebAPI.Installers
                     .UseSqlServer(
                         configuration["DefaultConnection"]));
 
-            services.AddHangfire(x => x.UseSqlServerStorage(configuration["DefaultConnection"]));
+            //services.AddHangfire(x => x.UseSqlServerStorage(configuration["DefaultConnection2"]));
+            services.AddHangfire(x => x.UseMemoryStorage());
             services.AddHangfireServer();
         }
     }
