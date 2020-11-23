@@ -20,6 +20,10 @@ namespace JPSAGE_ERP.Infrastructure.IoC
             // DI for FluentValidator
             services.AddMvc().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<DailyReportFormDTOValidator>());
             services.AddTransient<IValidator<DailyReportFormDTO>, DailyReportFormDTOValidator>();
+            services.AddTransient<IValidator<TechnicalQueriesFormDto>, TechnicalQueriesFormDtoValidator>();
+            services.AddTransient<IValidator<AttentionReplyFormDto>, AttiontionReplyFormDtoValidator>();
+            services.AddTransient<IValidator<InitiatorReplyFormDto>, InitiatorReplyFormDtoValidator>();
+
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IContractAwardRepository, ContractAwardRepository>();

@@ -15,10 +15,6 @@ namespace JPSAGE_ERP.Domain.Entities
             TblSrconstructionTechnicalQueriesStaff = new HashSet<TblSrconstructionTechnicalQueries>();
             TblSrconstructionTechnicalQueriesTempAttentionNavigation = new HashSet<TblSrconstructionTechnicalQueriesTemp>();
             TblSrconstructionTechnicalQueriesTempStaff = new HashSet<TblSrconstructionTechnicalQueriesTemp>();
-            TblSrconstructionTechnicalQueryRepliesAuthoriser = new HashSet<TblSrconstructionTechnicalQueryReplies>();
-            TblSrconstructionTechnicalQueryRepliesChecker = new HashSet<TblSrconstructionTechnicalQueryReplies>();
-            TblSrconstructionTechnicalQueryRepliesTempAuthoriser = new HashSet<TblSrconstructionTechnicalQueryRepliesTemp>();
-            TblSrconstructionTechnicalQueryRepliesTempChecker = new HashSet<TblSrconstructionTechnicalQueryRepliesTemp>();
             TblStaffRolesAuthoriser = new HashSet<TblStaffRoles>();
             TblStaffRolesChecker = new HashSet<TblStaffRoles>();
         }
@@ -59,10 +55,6 @@ namespace JPSAGE_ERP.Domain.Entities
         public virtual ICollection<TblSrconstructionTechnicalQueries> TblSrconstructionTechnicalQueriesStaff { get; set; }
         public virtual ICollection<TblSrconstructionTechnicalQueriesTemp> TblSrconstructionTechnicalQueriesTempAttentionNavigation { get; set; }
         public virtual ICollection<TblSrconstructionTechnicalQueriesTemp> TblSrconstructionTechnicalQueriesTempStaff { get; set; }
-        public virtual ICollection<TblSrconstructionTechnicalQueryReplies> TblSrconstructionTechnicalQueryRepliesAuthoriser { get; set; }
-        public virtual ICollection<TblSrconstructionTechnicalQueryReplies> TblSrconstructionTechnicalQueryRepliesChecker { get; set; }
-        public virtual ICollection<TblSrconstructionTechnicalQueryRepliesTemp> TblSrconstructionTechnicalQueryRepliesTempAuthoriser { get; set; }
-        public virtual ICollection<TblSrconstructionTechnicalQueryRepliesTemp> TblSrconstructionTechnicalQueryRepliesTempChecker { get; set; }
         public virtual ICollection<TblStaffRoles> TblStaffRolesAuthoriser { get; set; }
         public virtual ICollection<TblStaffRoles> TblStaffRolesChecker { get; set; }
     }
