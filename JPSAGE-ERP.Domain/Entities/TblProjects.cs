@@ -14,6 +14,8 @@ namespace JPSAGE_ERP.Domain.Entities
             TblPurchaseOrder = new HashSet<TblPurchaseOrder>();
             TblQuotationMaster = new HashSet<TblQuotationMaster>();
             TblSingleTenderJustification = new HashSet<TblSingleTenderJustification>();
+            TblSrconstructionTechnicalQueries = new HashSet<TblSrconstructionTechnicalQueries>();
+            TblSrconstructionTechnicalQueriesTemp = new HashSet<TblSrconstructionTechnicalQueriesTemp>();
             TblSrdailyReporting = new HashSet<TblSrdailyReporting>();
             TblSrdailyReportingTemp = new HashSet<TblSrdailyReportingTemp>();
             TblSrnonConformanceReports = new HashSet<TblSrnonConformanceReports>();
@@ -31,6 +33,8 @@ namespace JPSAGE_ERP.Domain.Entities
         public virtual ICollection<TblPurchaseOrder> TblPurchaseOrder { get; set; }
         public virtual ICollection<TblQuotationMaster> TblQuotationMaster { get; set; }
         public virtual ICollection<TblSingleTenderJustification> TblSingleTenderJustification { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueries> TblSrconstructionTechnicalQueries { get; set; }
+        public virtual ICollection<TblSrconstructionTechnicalQueriesTemp> TblSrconstructionTechnicalQueriesTemp { get; set; }
         public virtual ICollection<TblSrdailyReporting> TblSrdailyReporting { get; set; }
         public virtual ICollection<TblSrdailyReportingTemp> TblSrdailyReportingTemp { get; set; }
         public virtual ICollection<TblSrnonConformanceReports> TblSrnonConformanceReports { get; set; }

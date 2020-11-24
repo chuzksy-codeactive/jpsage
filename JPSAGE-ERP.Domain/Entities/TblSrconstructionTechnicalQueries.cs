@@ -22,15 +22,17 @@ namespace JPSAGE_ERP.Domain.Entities
         public string Ctqdescription { get; set; }
         public int? Attention { get; set; }
         public DateTime? ReplyRequiredBy { get; set; }
-        public string Priority { get; set; }
+        public int? Priority { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+        public int? ProjectId { get; set; }
 
         public virtual TblStaffBioData AttentionNavigation { get; set; }
         public virtual TblCity City { get; set; }
         public virtual TblCountry Country { get; set; }
+        public virtual TblProjects Project { get; set; }
         public virtual TblStaffBioData Staff { get; set; }
         public virtual TblState State { get; set; }
         public virtual ICollection<TblSrconstructionTechnicalQueryAttachments> TblSrconstructionTechnicalQueryAttachments { get; set; }

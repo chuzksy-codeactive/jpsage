@@ -24,6 +24,7 @@ namespace JPSAGE_ERP.Domain
         //public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         //public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         //public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+
         public virtual DbSet<BackgroundExecutor> BackgroundExecutor { get; set; }
         public virtual DbSet<BackgroundExecutorTrack> BackgroundExecutorTrack { get; set; }
         public virtual DbSet<BackgroundExecutorTrackingHistory> BackgroundExecutorTrackingHistory { get; set; }
@@ -2964,7 +2965,7 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Priority).HasMaxLength(100);
+                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
 
                 entity.Property(e => e.QueryDate).HasColumnType("datetime");
 
@@ -2988,6 +2989,11 @@ namespace JPSAGE_ERP.Domain
                     .WithMany(p => p.TblSrconstructionTechnicalQueries)
                     .HasForeignKey(d => d.CountryId)
                     .HasConstraintName("FK_tbl_SRConstructionTechnicalQueries_tbl_Country");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueries)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueries_tbl_Projects");
 
                 entity.HasOne(d => d.Staff)
                     .WithMany(p => p.TblSrconstructionTechnicalQueriesStaff)
@@ -3033,7 +3039,7 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Priority).HasMaxLength(100);
+                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
 
                 entity.Property(e => e.QueryDate).HasColumnType("datetime");
 
@@ -3057,6 +3063,11 @@ namespace JPSAGE_ERP.Domain
                     .WithMany(p => p.TblSrconstructionTechnicalQueriesTemp)
                     .HasForeignKey(d => d.CountryId)
                     .HasConstraintName("FK_tbl_SRConstructionTechnicalQueriesTemp_tbl_Country");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.TblSrconstructionTechnicalQueriesTemp)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueriesTemp_tbl_Projects");
 
                 entity.HasOne(d => d.Staff)
                     .WithMany(p => p.TblSrconstructionTechnicalQueriesTempStaff)
@@ -3136,14 +3147,6 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ReplyId).HasColumnName("ReplyID");
 
-                entity.Property(e => e.AuthoriserId).HasColumnName("AuthoriserID");
-
-                entity.Property(e => e.AuthoriserReplyDate).HasColumnType("datetime");
-
-                entity.Property(e => e.CheckerId).HasColumnName("CheckerID");
-
-                entity.Property(e => e.CheckerReplyDate).HasColumnType("datetime");
-
                 entity.Property(e => e.CreatedBy).HasMaxLength(200);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -3157,16 +3160,6 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.QueryCloseDate).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Authoriser)
-                    .WithMany(p => p.TblSrconstructionTechnicalQueryRepliesAuthoriser)
-                    .HasForeignKey(d => d.AuthoriserId)
-                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueryReplies_tbl_StaffBioData1");
-
-                entity.HasOne(d => d.Checker)
-                    .WithMany(p => p.TblSrconstructionTechnicalQueryRepliesChecker)
-                    .HasForeignKey(d => d.CheckerId)
-                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueryReplies_tbl_StaffBioData");
 
                 entity.HasOne(d => d.Ctq)
                     .WithMany(p => p.TblSrconstructionTechnicalQueryReplies)
@@ -3183,14 +3176,6 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ReplyId).HasColumnName("ReplyID");
 
-                entity.Property(e => e.AuthoriserId).HasColumnName("AuthoriserID");
-
-                entity.Property(e => e.AuthoriserReplyDate).HasColumnType("datetime");
-
-                entity.Property(e => e.CheckerId).HasColumnName("CheckerID");
-
-                entity.Property(e => e.CheckerReplyDate).HasColumnType("datetime");
-
                 entity.Property(e => e.CreatedBy).HasMaxLength(200);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -3204,16 +3189,6 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.QueryCloseDate).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Authoriser)
-                    .WithMany(p => p.TblSrconstructionTechnicalQueryRepliesTempAuthoriser)
-                    .HasForeignKey(d => d.AuthoriserId)
-                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueryRepliesTemp_tbl_StaffBioData1");
-
-                entity.HasOne(d => d.Checker)
-                    .WithMany(p => p.TblSrconstructionTechnicalQueryRepliesTempChecker)
-                    .HasForeignKey(d => d.CheckerId)
-                    .HasConstraintName("FK_tbl_SRConstructionTechnicalQueryRepliesTemp_tbl_StaffBioData");
 
                 entity.HasOne(d => d.Ctq)
                     .WithMany(p => p.TblSrconstructionTechnicalQueryRepliesTemp)
