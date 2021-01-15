@@ -34,7 +34,10 @@ namespace JPSAGE_ERP.Application.Models.Account
         [Required]
         public string StaffNumber { get; set; }
 
+        [Required]
+        public int CompanyId { get; set; }
 
-        //public string ObjectId { get; set; }
+        [Required]
+        public int RoleId { get; set; }
     }
 }

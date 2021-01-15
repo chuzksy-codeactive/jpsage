@@ -3,6 +3,7 @@ using JPSAGE_ERP.Application.Interfaces;
 using JPSAGE_ERP.Application.Models.Account;
 using JPSAGE_ERP.Application.Services;
 using JPSAGE_ERP.Domain.Entities;
+using JPSAGE_ERP.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
         private readonly IRepository<TblCity> _cityRepository;
         private readonly IRepository<TblState> _stateRepository;
         private readonly IRepository<TblStaffBioData> _staffRepository;
+        private readonly IRepository<TblCompanyInfo> _company;
 
         public AccountController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
@@ -42,7 +44,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
             IRepository<TblCity> cityRepository,
             IRepository<TblState> stateRepository,
             IRepository<TblStaffBioData> staffRepository,
-            IConfiguration configuration)
+            IConfiguration configuration, IRepository<TblCompanyInfo> company)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -52,6 +54,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
             _stateRepository = stateRepository;
             _staffRepository = staffRepository;
             Configuration = configuration;
+            _company = company;
         }
 
         public IConfiguration Configuration { get; }
@@ -59,20 +62,6 @@ namespace JPSAGE_ERP.WebAPI.Controllers
         /// <summary>
         /// Registers a User
         /// </summary>
-        /// /// <remarks>
-        /// Rest-api-key : "ebfb7ff0-b2f6-41c8-bef3-4fba17be410c"
-        /// Return Format: 
-        /// POST/api/v1/users/Register
-        /// ()
-        /// { 
-        ///     username = "",
-        ///     email = "", 
-        ///     status = 1, 
-        ///     message = "Registration Successful" 
-        /// } 
-        /// </remarks>
-        /// <response code="200"> Returns registered username and email with a success message</response>
-        /// <response code="400">Returns all error description</response>
         /// <param name="RegData"></param>
         /// <returns></returns>
         //[Authorize("RequireAdministratorRole")]
@@ -81,9 +70,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
         [ProducesResponseType(400)]
         [Authorize("RequireAdministratorRole")]
         [HttpPost("register")]
-        public async Task<IActionResult> Register(
-            //[FromHeader(Name = "REST-api-key"), Required] string apiKey, 
-            [FromBody] RegisterViewModel RegData)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel RegData)
         {
             // Will hold all errors related to registration 
             List<string> errorList = new List<string>();
@@ -91,6 +78,28 @@ namespace JPSAGE_ERP.WebAPI.Controllers
             // server side validation for User object
             if (ModelState.IsValid)
             {
+                if (!Enum.IsDefined(typeof(ERoles), RegData.RoleId))
+                {
+                    return BadRequest(new 
+                    {
+                        success = false,
+                        message = "Role is not defined",
+                        data = new { }
+                    });
+                }
+
+                var company = await _company.ExistsAsync(x => x.CompanyId == RegData.CompanyId);
+
+                if (!company)
+                {
+                    return NotFound(new
+                    {
+                        success = false,
+                        message = "Company is not found",
+                        data = new { }
+                    });
+                }
+
                 var user = new ApplicationUser
                 {
                     Email = RegData.Email,
@@ -109,7 +118,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                 if (result.Succeeded)
                 {
                     // adding default identity user role to created user
-                    await _userManager.AddToRoleAsync(user, "Staff");
+                    await _userManager.AddToRoleAsync(user, ((ERoles)RegData.RoleId).GetDescription());
 
                     // create Staff bio data
                     var newStaff = new TblStaffBioData
@@ -120,10 +129,12 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                         FirstName = RegData.FirstName,
                         LastName = RegData.LastName,
                         OfficePhoneNumber = RegData.PhoneNumber,
-
+                        CompanyId = RegData.CompanyId,
+                        CreatedDate = DateTime.UtcNow
                     };
 
                     await _staffRepository.CreateAsync(newStaff);
+                    await _staffRepository.SaveChangesAsync();
 
 
                     // Sending Confirmation Email
